@@ -54,7 +54,7 @@ const SignIn = () => {
             e.preventDefault();
             const response = await axios({
                 method: "POST",
-                url: `http://localhost:8000/users/login`,
+                url: `${serverUrl}/users/login`,
                 data: { email, password }
             })
 

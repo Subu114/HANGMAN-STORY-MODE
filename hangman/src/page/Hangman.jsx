@@ -1,10 +1,8 @@
-import { Button, message, notification } from 'antd';
+import { Button, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import UseCurrentScene from '../hooks/UseCurrentScene';
-import image from '../data/SceneBg';
 import "./Hangman.css";
 import HangmanImage from '../data/HangmanImg';
-import scenes from "../data/scenes.json";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { _id, token } from '../config/userData';
@@ -62,8 +60,10 @@ const Hangman = () => {
     };
 
     useEffect(() => {
-        if (!isAuth())
+        if (!isAuth()){
+            message.error("User not authenticated!", 5)
             return navigate("/")
+        }
         
         fetchData();
     }, []);

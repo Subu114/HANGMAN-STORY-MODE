@@ -1,7 +1,7 @@
 const { generateToken } = require("../authenticate/jwtUtil");
-const User = require("../models/user");
-
 const bcrypt = require('bcrypt');
+
+const User = require("../models/user");
 const UserGameState = require("../models/userGameState");
 const Scene = require("../models/scene");
 
