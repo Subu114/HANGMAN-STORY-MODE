@@ -1,0 +1,65 @@
+
+.clue-container {
+    margin: 0;
+    overflow: hidden; /* Prevent scrolling */
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+    padding-bottom: 50px; /* Adjust this value to move the content higher or lower */
+}
+
+.clue-bg {
+    width: 80%; 
+    height: 80%; 
+    background-size: contain; 
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    position: absolute; /* Position absolutely within the container */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the element */
+    display: flex; /* Allow flex properties for child elements */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    flex-direction: column;
+}
+
+.clue-content {
+    color: black; /* Ensure text is visible */
+    font-size: 2rem; /* Adjust font size as needed */
+    font-weight: bolder;
+    text-align: center; /* Center align text */
+    padding: 10px; /* Add padding if needed */
+     /* Optional: add a semi-transparent background to enhance readability */
+    border-radius: 5px; /* Optional: round the corners */
+    margin: 10;
+    max-width: 600px;
+}
+
+.scene-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.button-container{
+    margin-top: 20px;
+    display: flex;
+    /* height: auto;
+    bottom: 0px;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 20px; */
+}
+.button-container button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

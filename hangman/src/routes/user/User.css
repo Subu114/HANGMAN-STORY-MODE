@@ -1,0 +1,174 @@
+@font-face {
+    font-family: 'Inter'; 
+    src: url('../../fonts/Inter-Bold.ttf'); 
+  
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* color: white; */
+}
+.main-container {
+    color: white;
+    display: flex;
+    flex-direction: column ;
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.header{
+    /* border: 2px solid white; */
+    height: 12%;
+    display: flex;
+    align-items: center;
+}
+.header button:hover{
+    cursor: pointer;
+    color: darkred;
+}
+.header button{
+    /* border: 2px solid white; */
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bolder;
+    font-size: 1.3rem;
+    padding: 2% 4%;
+}
+
+.body{
+    padding-top: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* border: 2px solid white; */
+}
+
+.personal-details {
+    margin-top: 5%;
+    flex : 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+
+}
+.personal-details button{
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+.personal-details button :hover{
+    cursor:pointer;
+    cursor: pointer;
+    filter: blur(2px);
+}
+.personal-details img{
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+.personal-details p{
+    font-size: 1.6rem;
+    padding: 2%;
+}
+
+
+.continue-button {
+    display: flex;
+    align-self: flex-end;
+    justify-content: center;
+    flex-direction: column;
+
+    flex: 1;
+    padding: 20px;
+}
+
+
+.stats{
+    
+    flex : 2;
+    /* border: 2px solid white; */
+    display: flex;
+    /* flex-direction: co; */
+    justify-content: center;
+}
+
+.stats-box{
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 80%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.details {
+    flex: 2;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    font-family: Inter;
+    font-weight: lighter;
+}
+.account, .username {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.account p, .username p{
+    font-weight: lighter;
+    font-size: 0.7rem;
+    color: rgb(179, 155, 155);
+}
+
+.current-level{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+}
+.attr-val-box{
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+}
+
+.attributes {
+    margin-right: 5%;
+    text-align: center;
+}
+.values {
+    margin-left: 5%;
+    text-align: center;
+}
+.values p{
+    
+    color: rgb(179, 155, 155);
+}
+
+.stats-box button{
+    border-radius: 20px;  
+    position: relative;
+    background-color: rgba(255, 255, 255, 1);
+    height: 40px;
+    width: 20%;
+    margin: 0 2% 2% 0;
+    align-self: flex-end;
+    font-size: 1rem;
+    color: black;
+}
+
+h2{
+    text-transform: uppercase;
+}

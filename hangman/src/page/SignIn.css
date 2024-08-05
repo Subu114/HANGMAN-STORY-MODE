@@ -1,0 +1,65 @@
+.sign-in-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    color: black;
+}
+
+.sign-in-container h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sign-in-container .ant-space {
+    width: 100%;
+}
+
+.sign-in-container .ant-input,
+.sign-in-container .ant-input-password {
+    border-radius: 5px;
+}
+
+.sign-in-container .ant-btn-primary {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.sign-in-container .register-section {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+}
+
+.sign-in-container .register-button {
+    background: none;
+    border: none;
+    color: #1890ff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.sign-in-container .register-button:hover {
+    color: #40a9ff;
+}
+
+.sign-in-container .content-box {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.ant-input-affix-wrapper {
+    border-radius: 5px !important;
+}
+
+.ant-input-affix-wrapper>input.ant-input {
+    border-radius: 5px !important;
+}

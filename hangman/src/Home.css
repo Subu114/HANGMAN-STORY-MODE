@@ -1,0 +1,121 @@
+@font-face {
+    font-family: 'Inter';
+    src: url("./fonts/Inter-Bold.ttf");
+}
+
+@font-face {
+    font-family: 'Alladin';
+    src: url("./fonts/Aladin-Regular.ttf");
+}
+
+body,
+html {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: black;
+}
+
+.scrollable-container {
+    background: url('./assets/menu_bg.png');
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.btn-left {
+    margin-left: 1%;
+    padding: 1.5%;
+}
+
+.btn-right {
+    margin-right: 1%;
+    padding: 1.5%;
+}
+
+.btn-left button {
+    font-size: 1.2rem;
+    margin-right: 100px;
+}
+
+.btn-right button {
+    font-size: 1.2rem;
+    margin-left: 100px;
+}
+
+.btn-left button:hover {
+    cursor: pointer;
+    color: red;
+    font-weight: bolder;
+}
+
+.btn-right button:hover {
+    cursor: pointer;
+    color: red;
+    font-weight: bolder;
+}
+
+.btn-left button {
+    font-family: Inter;
+    color: white;
+    background-color: transparent;
+    border: none;
+}
+
+.btn-right button {
+    font-family: Inter;
+    color: white;
+    background-color: transparent;
+    border: none;
+}
+
+
+.space {
+    font-size: xx-large;
+    height: 650px;
+}
+.play-button{
+    display: flex;
+
+    justify-content: center;
+    padding-bottom: 5%;
+}
+.play-button button{
+    width: 10%;
+    height: 50px;
+    font-size: 1.4rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    color : red;
+    font-weight: bolder;
+    border-radius: 15px;
+}
+.play-button button:hover{
+    cursor: pointer;
+    width: 10%;
+    height: 50px;
+    font-size: 1.5rem;
+    background-color: none;
+    color : red;
+    font-weight: bolder;
+}
+
+.story-container {
+    margin:5%;
+    position: relative;
+    bottom: 10px;
+    padding: 2%;
+    background-color: rgba(0, 0, 0, 0.6);
+    font-family: Alladin;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 20px;
+    border: 2px solid white;
+}

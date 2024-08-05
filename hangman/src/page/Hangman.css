@@ -1,0 +1,138 @@
+@font-face {
+    font-family: 'Itim';
+    src: url('../fonts/Itim-Regular.ttf');
+}
+
+.mainn-container {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: white;
+    padding-bottom: 50px;
+}
+
+.hangmanContainer {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.6);
+    margin-top: 80px;
+    border-radius: 15px;
+    width: 35%;
+    height: 80vh;
+    margin-bottom: 30px;
+}
+
+
+.branch {
+    position: relative;
+    top: 10%;
+    left: 50%;
+    width: 60%;
+    transform: translateX(-50%);
+}
+
+.hangman {
+    position: absolute;
+    width: 60%;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+.word-container {
+    display: inline-flex;
+    flex : 1;
+    flex-direction: column;
+    justify-content: end;
+    margin-bottom: 50px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.word-container label {
+    font-size: 1.5rem;
+}
+
+.input-container {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    display: flex;
+    white-space: nowrap;
+    justify-content: center;
+}
+
+.input-container div {
+    font-size: 2vw;
+    padding-bottom: 2%;
+    
+}
+
+.wrong-guess {
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+    right: 0px;
+    padding-bottom: 5%;
+}
+
+.wrong-guess-inner-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.wrong-guess p {
+    text-decoration: line-through;
+    text-decoration-color: red;
+    font-size: 1.5rem;
+}
+
+.menu-button{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: red;
+    font-weight: 900;
+    text-shadow: 5px;
+    top: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+.menu-button:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgb(223, 24, 24);
+    font-weight: 900;
+    text-shadow: 5px;
+    top: 5px;
+    padding: 5px;
+    font-size: 15px;
+}
+
+.hint-container {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+}
+
+
+.scene-number{
+    font-size: 1.2vw;
+    padding: 1%;
+}
+
+.next-scene{
+    position: absolute;
+    right : 5%;
+    bottom : 5%;
+    padding: 5px;
+    border-radius: 10px;
+    background: rgb(49, 219, 49);
+    box-shadow: 2px;
+}
