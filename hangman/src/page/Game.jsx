@@ -6,9 +6,9 @@ import { setGameState, setScene, userDataRemove } from '../auth';
 import LoadingPage from '../components/LoadingPage';
 import { message } from 'antd';
 import { _id, token } from '../config/userData';
-//nav usingkeys
+//nav usingkeys (DONE)
 //imag load bfrtext
-//home pageimg rearrangr
+//home pageimg rearrangr 
 //torture effects fr hangman when incorrect input 
 const Game = () => {
     const navigate = useNavigate();

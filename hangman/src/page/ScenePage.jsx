@@ -7,25 +7,45 @@ import { useNavigate } from 'react-router-dom';
 import UseCurrentScene from '../hooks/UseCurrentScene';
 import { isAuth } from '../auth';
 import LoadingPage from '../components/LoadingPage';
+import { message } from 'antd';
 
 const ScenePage = () => {
     const currentScene = UseCurrentScene();
-    console.log(currentScene)
     const sceneNumber = `Scene ${currentScene.scene_number}`;
     const sceneStory = currentScene.scene_story;
     const bgImage = currentScene.scene_img;
     const navigate = useNavigate();
     let [loading, setLoading] = useState(true);
+    const [press, setp] = useState(true)
 
+    const handleKeyPress = (e) => {
+        const val = e.key;
+
+        if (val === "ArrowLeft"){
+            
+        }
+        else if (val === "ArrowRight"){
+            navigate("/clue")
+        }
+
+       setp(p => !p)
+    };
     useEffect(() => {
         if (!isAuth()) {
             return navigate("/")
+        
         }
         setTimeout(() => {
             setLoading(false)
         }, 1500)
     }, [])
-
+    
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [press])
 
     return (
         <LoadingPage loading={loading}>

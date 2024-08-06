@@ -10,13 +10,12 @@ import { serverUrl } from '../config/serverUrl';
 import LevelComplete from './LevelComplete';
 import useFetchWord from '../hooks/useFetchWord';
 import LoadingPage from '../components/LoadingPage';
-import { isAuth } from '../auth';
+import { isAuth, userDataRemove } from '../auth';
 
 const Hangman = () => {
     const navigate = useNavigate();
     const currentScene = UseCurrentScene();
     const { data: word, loading, error } = useFetchWord(currentScene.scene_number);
-    console.log(word)
     const [hint, setHint] = useState();
     const [status, setStatus] = useState('pending');
     const [displayWord, setDisplayWord] = useState([]);
@@ -48,6 +47,10 @@ const Hangman = () => {
             });
             message.info("Press any alphabet from your keyboard to start!", 5)
         } catch (error) {
+            if (error.response.status === 403) {
+                userDataRemove();
+                return navigate("/")
+            }
             if (axios.isCancel(error)) {
                 console.log("Request canceled", error.message);
             } else {
@@ -60,11 +63,11 @@ const Hangman = () => {
     };
 
     useEffect(() => {
-        if (!isAuth()){
+        if (!isAuth()) {
             message.error("User not authenticated!", 5)
             return navigate("/")
         }
-        
+
         fetchData();
     }, []);
 
@@ -72,7 +75,6 @@ const Hangman = () => {
         const controller = new AbortController();
         const { signal } = controller;
         try {
-            console.log(hint)
             await axios({
                 method: "POST",
                 url: `${serverUrl}/users/game-state/create`,
@@ -94,6 +96,10 @@ const Hangman = () => {
             } else {
                 console.log("Error posting game state:", error);
                 message.error(error.response ? error.response.data.message : error.message, 5)
+                if (error.response.status === 403) {
+                    userDataRemove();
+                    return navigate("/")
+                }
             }
         }
         return () => controller.abort();
@@ -122,8 +128,6 @@ const Hangman = () => {
             gameStatus();
         }
         else if (wrongGuessed.length >= 0) {
-            console.log("I ", wrongGuessed.length)
-            console.log(wrongGuessed)
             setHangmanImg(HangmanImage[wrongGuessed.length]);
         }
     }, [wrongGuessed]);
@@ -178,9 +182,16 @@ const Hangman = () => {
 
     const handleKeyPress = (e) => {
         const val = e.key.toUpperCase();
+        if (val === "ARROWLEFT") {
+            navigate("/clue")
+        }
+        else if (val === "ARROWRIGHT" || val === "ENTER") {
+            if (status === "won")
+                handleNextScene()
+        }
         if (!val || val.length > 1) return;
 
-        console.log(val, val.length)
+        console.log(val)
         if (!(val >= "A" && val <= "Z")) {
             if (gameStatus()) message.warning("Invalid Input\nPlease enter only alphabets!!", 5);
             return;
@@ -207,10 +218,20 @@ const Hangman = () => {
         )
     }
 
+    const handleNextScene = async () => {
+        console.log("NEXT SCENE : ", currentScene.next_scene)
+        if (currentScene.next_scene === -1) {
+            navigate("/gamewon")
+            return;
+        }
+        await LevelComplete(currentScene.next_scene)
+        console.log("NAVIGATING TO SCENEPAGE")
+        navigate("/scenepage")
+    }
     return (
         <LoadingPage loading={loading}>
             <div className="mainn-container" style={{ backgroundImage: `url(${bgImage})` }}>
-                
+
                 <div className='hint-container'>
                     <Button onClick={getHint}>Hint {hint}</Button>
                 </div>
@@ -231,7 +252,7 @@ const Hangman = () => {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className='word-container'>
                     <div>
                         <label>Enter Your Guess: </label>
@@ -241,16 +262,7 @@ const Hangman = () => {
                     </div>
                 </div>
                 {status === "won" && (
-                    <button className='next-scene' onClick={async () => {
-                        console.log("NEXT SCENE : ", currentScene.next_scene)
-                        if (currentScene.next_scene === -1) {
-                            navigate("/gamewon")
-                            return;
-                        }
-                        await LevelComplete(currentScene.next_scene)
-                        console.log("NAVIGATING TO SCENEPAGE")
-                        navigate("/scenepage")
-                    }} autoFocus>Next Scene</button>
+                    <button className='next-scene' onClick={handleNextScene} autoFocus>Next Scene</button>
                 )}
             </div>
         </LoadingPage>

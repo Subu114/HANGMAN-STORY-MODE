@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import clueBg from '../assets/clue.png'
 import "./Clue.css"
 import nextBtn from "../assets/clue_next_btn.png"
@@ -11,6 +11,22 @@ const Clue = ({ }) => {
     const clue = currentScene.scene_clue
     const bgImage = currentScene.scene_img
     const navigate = useNavigate();
+    const [press, setp] = useState(true)
+
+    const handleKeyPress = (e) => {
+        const val = e.key;
+
+        if (val === "ArrowLeft"){
+            navigate("/scenepage")
+            
+        }
+        else if (val === "ArrowRight"){
+            navigate("/hangman")
+        }
+
+       setp(p => !p)
+    };
+
     useEffect(() => {
         if (!isAuth())
             navigate("/")
@@ -18,6 +34,13 @@ const Clue = ({ }) => {
     const handleNext = () => {
         navigate("/hangman")
     }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [press])
     return (
         <div className="clue-container" style={{ backgroundImage: `url(${bgImage})` }}>
             <div className='scene-header'>
