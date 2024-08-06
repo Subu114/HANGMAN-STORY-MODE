@@ -88,13 +88,15 @@ const SignIn = () => {
                             type="email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
-                            
+                            onPressEnter={onSignIn}
                         />
+                        
                         <Input.Password
                             prefix={<LockOutlined />}
                             placeholder="Input password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
+                            onPressEnter={onSignIn}
                         />
                         <Button onClick={onSignIn} type="primary">
                             Sign In

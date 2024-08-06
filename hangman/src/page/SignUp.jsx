@@ -107,6 +107,7 @@ const SignUp = () => {
                             type="text"
                             value={username}
                             onChange={userNameChange}
+                            onPressEnter={onSignUp}
                         />
                         {usernameExists !== null && (
                             <span className="username-status" style={{ color: usernameExists ? 'red' : 'green' }}>
@@ -120,12 +121,14 @@ const SignUp = () => {
                             type="email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
+                            onPressEnter={onSignUp}
                         />
                         <Input.Password
                             prefix={<LockOutlined />}
                             placeholder="Input password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
+                            onPressEnter={onSignUp}
                         />
                         <Button type="primary" onClick={onSignUp}>
                             Sign Up
