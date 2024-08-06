@@ -14,7 +14,7 @@ const authenticateJWT = (req, res, next) => {
         req.user = user;
         return next();
     } catch (error) {
-        console.log("User NOT Authenticated : ", error)
+        console.log("User NOT Authenticated : ", error.message)
         return res.sendStatus(403);
     }
 

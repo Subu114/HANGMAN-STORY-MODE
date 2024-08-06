@@ -20,7 +20,6 @@ const useFetchWord = (sceneNumber) => {
                     'Authorization' : `Bearer ${token}`
                 }
             })
-            console.log(response.data)
             setData(response.data.scene_word.toUpperCase())
             
         } 
