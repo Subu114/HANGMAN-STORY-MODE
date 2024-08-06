@@ -121,9 +121,8 @@ const Hangman = () => {
     }, [displayWord]);
 
     useEffect(() => {
-        if (wrongGuessed?.length >= 6 && displayWord.length > 1) {
+        if (wrongGuessed?.length > 6 && displayWord.length > 1) {
 
-            setHangmanImg(HangmanImage[wrongGuessed.length]);
             setStatus('lost');
             gameStatus();
         }
