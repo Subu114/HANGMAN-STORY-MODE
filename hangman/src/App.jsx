@@ -14,6 +14,7 @@ import User from './routes/user/User';
 import Game from './page/Game';
 import GameWon from './page/GameWon';
 import GameFiles from './routes/admin/GameFiles';
+import Levels from './page/Levels';
 
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/levels" element={<Levels />} />
+        
 
 
         <Route path="/scenepage" element={<ScenePage />} />
