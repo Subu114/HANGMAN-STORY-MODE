@@ -1,0 +1,56 @@
+.level-cont {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 2.5%;
+    width: 50%;
+    margin-bottom: 2%;
+    margin-top: 4%;
+    transition: transform 0.8s ease, font-size 0.8s ease; 
+    
+}
+
+.active {
+    transform: scale(1.1); 
+    font-size: 1.5rem; 
+}
+
+.line-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+hr {
+    border: 1px solid rgba(255, 255, 255, 0.388);
+    width: 10%;
+    height: 1%;
+}
+
+.circle {
+    background: rgba(255, 255, 255, 0.38);
+    width: 5px;
+    height: 5px;
+    transform: rotate(45deg);
+}
+
+.header {
+    font-family: Cinzel;
+    font-size: 1.5vw;
+}
+
+.desc {
+    font-family: Marck-Script;
+    font-size: 1.5vw;
+}
+
+.not-active-container{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 2.0%;
+    width: 40%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+.not-active{
+    margin-left: 10%;
+}
