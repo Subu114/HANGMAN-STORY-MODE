@@ -1,8 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { serverUrl } from '../config/serverUrl';
-import { isAuth, userAuthenticated, userDataRemove } from '../auth';
+import { userAuthenticated, userDataRemove } from '../auth';
 import { Button, Input, message, Space } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import "./SignIn.css"
@@ -12,10 +12,6 @@ import { gameFolder } from '../config/serverFolders';
 
 const SignIn = () => {
     const navigate = useNavigate();
-    if (isAuth()) {
-        navigate("/user")
-        return;
-    }
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -23,9 +19,7 @@ const SignIn = () => {
 
 
     const { loading: l, data: img } = useFetchImage(gameFolder, "user_portal")
-    useEffect(() => {
-        setLoading(l);
-    }, [l]);
+
 
 
     const checkDetails = async () => {
@@ -38,9 +32,9 @@ const SignIn = () => {
             message.error("Password must be at least 6 characters long", 5);
             return true;
         }
-        if(password.includes(" ")){
+        if (password.includes(" ")) {
             message.error("Password must not contain any space", 5);
-            return true;    
+            return true;
         }
         return false;
     };
@@ -64,7 +58,7 @@ const SignIn = () => {
                 message.success("Signed In successfully", 5)
                 console.log("Successfully signed in")
                 setLoading(false)
-                setTimeout(navigate("/user"), 1000)
+                setTimeout(() => { navigate("/user") }, 1000)
             }
         } catch (error) {
             console.log("Error : ", error.response.data.message)
@@ -76,7 +70,7 @@ const SignIn = () => {
         }
     }
     return (
-        <LoadingPage loading={loading}>
+        <LoadingPage loading={l || loading}>
             <div className="sign-in-container" style={{ backgroundImage: `url(${img})` }}>
                 <div className="content-box">
                     <h1>Sign In</h1>
@@ -84,13 +78,13 @@ const SignIn = () => {
                         <Input
                             size="medium"
                             placeholder="Enter email"
-                            prefix={<UserOutlined color='black'/>}
+                            prefix={<UserOutlined color='black' />}
                             type="email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                             onPressEnter={onSignIn}
                         />
-                        
+
                         <Input.Password
                             prefix={<LockOutlined />}
                             placeholder="Input password"

@@ -17,9 +17,6 @@ const SignUp = () => {
     const [usernameExists, setUsernameExists] = useState(null);
     const [loading, setLoading] = useState(false);
     const { loading: l, data: img } = useFetchImage(gameFolder, "user_portal");
-    useEffect(() => {
-        setLoading(l);
-    }, [l]);
 
     const abortControllerRef = useRef(new AbortController());
 
@@ -46,16 +43,18 @@ const SignUp = () => {
 
     const onSignUp = async (e) => {
         try {
+            setLoading(true)
             if (await checkDetails()){
                 return;
             }
                 e.preventDefault();
-            const response = await axios.post(`${serverUrl}/users/register`, { username, email, password });
-            console.log("Successfully Registered!");
+            await axios.post(`${serverUrl}/users/register`, { username, email, password });
 
             message.success("Registered successfully! Please sign in using registered credential", 5)
             navigate("/signin");
+            setLoading(false)
         } catch (error) {
+            setLoading(false)
             console.log("Error:", error.response.data);
             message.error("Error registering user! Please try again after some time", 5)
         }
@@ -95,7 +94,7 @@ const SignUp = () => {
     }, []);
 
     return (
-        <LoadingPage loading={loading}>
+        <LoadingPage loading={loading || l}>
             <div className="sign-up-container" style={{ backgroundImage: `url(${img})` }}>
                 <div className='content-box'>
                     <h1>Register Yourself</h1>
