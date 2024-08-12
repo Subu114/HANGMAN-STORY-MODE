@@ -51,7 +51,7 @@ exports.getScene = async (req, res) => {
 exports.getSceneWord = async (req, res) => {
     try {
         let { sceneNumber } = req.params
-        const { unique_token } = req.query
+        const { unique_token } = req.body
         console.log(sceneNumber)
         console.log("p : ", unique_token)
         sceneNumber = Number(sceneNumber)

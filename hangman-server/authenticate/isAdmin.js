@@ -8,7 +8,7 @@ exports.isAdmin = async (id) => {
             console.log(`User not found for ID: ${id}`);
             return false;
         }
-
+        
         console.log(`User found: ${check}`);
         console.log(`User role: ${check.role}`);
 

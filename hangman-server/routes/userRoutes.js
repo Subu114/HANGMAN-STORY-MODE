@@ -21,13 +21,16 @@ router.get('/get/:id', authenticateJWT, userController.getUserById);
 
 
 //Delete a user by ID
-router.delete('/delete/:id', authenticateJWT, userController.deleteUser);
+router.delete('/delete', authenticateJWT, userController.deleteUser);
 
 
 router.get("/check-username", userController.checkUsername)
 
 router.post("/game-state/create", authenticateJWT, userController.setGameState)
-router.get("/game-state/:user_id", authenticateJWT, userController.getGameState)
+router.get("/game-state", authenticateJWT, userController.getGameState)
+router.delete("/game-state/delete", authenticateJWT, userController.deleteGameState)
+
+router.post("/auth", authenticateJWT, userController.isAuth)
 
 
 module.exports = router;

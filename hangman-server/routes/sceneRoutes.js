@@ -9,7 +9,7 @@ router.get("/", authenticateJWT, sceneController.getAllScenes)
 
 router.get("/:sceneNumber", authenticateJWT, sceneController.getScene)
 
-router.get("/word/:sceneNumber", authenticateJWT, sceneController.getSceneWord)
+router.post("/word/:sceneNumber", authenticateJWT, sceneController.getSceneWord)
 
 router.post("/create", authenticateJWT, sceneController.putScene)
 router.post("/update", authenticateJWT, sceneController.updateScene)

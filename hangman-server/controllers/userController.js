@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const User = require("../models/user");
 const UserGameState = require("../models/userGameState");
 const Scene = require("../models/scene");
+const { isAdmin } = require("../authenticate/isAdmin");
+
 
 
 exports.loginUser = async (req, res) => {
@@ -48,8 +50,8 @@ exports.createUser = async (req, res) => {
 
 exports.addPhoto = async (req, res) => {
     try {
-        const { _id, photo } = req.body
-
+        const { photo } = req.body
+        const _id = req.user.id;
         if (!_id) {
             console.error("ID not provided")
             return res.status(400).json({ message: "Id is required to update the user data!" })
@@ -76,7 +78,7 @@ exports.addPhoto = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
     try {
-        const userId = req.params.id;
+        const userId = req.user.id;
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -91,10 +93,8 @@ exports.getUserById = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find({});
-        const _id = req.user.id
-        const user = await User.findById(_id)
-        if (user.role !== "admin")
-            return res.status(403).json({ message: "Unauthorized" })
+        if (!(await isAdmin(req.user.id)))
+            return res.status(401).json({ message: "Unauthorized" })
         res.status(200).json(users);
     } catch (error) {
         console.log("Error while fetching users : ", error);
@@ -105,7 +105,6 @@ exports.getAllUsers = async (req, res) => {
 exports.checkUsername = async (req, res) => {
     try {
         const { username } = req.query
-        console.log("username", username)
         const user = await User.find({ username });
         if (user && user.length !== 0) {
             console.log("existtttt : ")
@@ -120,7 +119,6 @@ exports.checkUsername = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     try {
-        const userId = req.params.id;
         const result = await User.findByIdAndDelete(req.user.id);
         if (!result) {
             return res.status(404).json({ message: "User not found" });
@@ -134,9 +132,8 @@ exports.deleteUser = async (req, res) => {
 
 exports.setGameState = async (req, res) => {
     try {
-        const { user_id, scene_id, display_word, wrong_guessed, hint } = req.body;
-
-        console.log(user_id, scene_id, display_word, wrong_guessed, hint)
+        const { scene_id, display_word, wrong_guessed, hint } = req.body;
+        const user_id = req.user.id;
         const userExists = await User.findById(user_id);
         if (!userExists) {
             return res.status(404).json({ message: "User not found" });
@@ -171,8 +168,7 @@ exports.setGameState = async (req, res) => {
 
 exports.getGameState = async (req, res) => {
     try {
-        const { user_id } = req.params;
-        console.log("User Id : ", user_id)
+        const user_id = req.user.id;
         const userExists = await User.findById(user_id);
         if (!userExists) {
             return res.status(404).json({ message: "User not found" });
@@ -189,3 +185,28 @@ exports.getGameState = async (req, res) => {
         res.status(500).json({ message: "Error while fetching user game state" });
     }
 };
+
+exports.deleteGameState = async (req, res) => {
+    try {
+        const userExists = await UserGameState.findOneAndDelete({user_id : req.user.id});
+        if (!userExists) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message : "User Game Restarted!" });
+    } catch (error) {
+        console.error("Error while deling user game state: ", error);
+        res.status(500).json({ message: "Error while deliting user game state" });
+    }
+};
+
+exports.isAuth = async (req, res) => {
+    try {
+        const id = req.user.id
+        res.status(200).json({ message : "User is authenticated!" });
+    } catch (error) {
+        console.error("Error while authenticating user ", error);
+        res.status(500).json({ message: "Error while authenticating user" });
+    }
+}
+
