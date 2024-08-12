@@ -21,11 +21,13 @@ const Hangman = () => {
     const [displayWord, setDisplayWord] = useState([]);
     const [wrongGuessed, setWrongGuessed] = useState([]);
     const [hangmanImg, setHangmanImg] = useState(null);
+    const [load, setLoad] = useState(true);
 
     const bgImage = currentScene.scene_img;
     const branch = HangmanImage[10];
 
     const fetchData = async () => {
+        setLoad(true)
         const controller = new AbortController();
         const { signal } = controller;
         try {
@@ -46,7 +48,9 @@ const Hangman = () => {
                 return val;
             });
             message.info("Press any alphabet from your keyboard to start!", 5)
+            setLoad(false)
         } catch (error) {
+            setLoad(false)
             if (error.response.status === 403) {
                 userDataRemove();
                 return navigate("/")
@@ -122,8 +126,7 @@ const Hangman = () => {
 
     useEffect(() => {
         if (wrongGuessed?.length > 6 && displayWord.length > 1) {
-
-            setStatus('lost');
+            setStatus(() =>'lost');
             gameStatus();
         }
         else if (wrongGuessed.length >= 0) {
@@ -211,7 +214,7 @@ const Hangman = () => {
 
     if (error) {
         message.error("Error occured!")
-        setTimeout(navigate("/user"), 5000)
+        setTimeout(() =>{navigate("/user")}, 5000)
         return (
             <div></div>
         )
@@ -228,7 +231,7 @@ const Hangman = () => {
         navigate("/scenepage")
     }
     return (
-        <LoadingPage loading={loading}>
+        <LoadingPage loading={loading || load}>
             <div className="mainn-container" style={{ backgroundImage: `url(${bgImage})` }}>
 
                 <div className='hint-container'>
