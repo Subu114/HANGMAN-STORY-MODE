@@ -83,12 +83,17 @@ html {
     height: 650px;
 }
 .play-button{
+    position: sticky;
     display: flex;
-
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     justify-content: center;
     padding-bottom: 5%;
 }
 .play-button button{
+    bottom: 10%;
     width: 10%;
     height: 50px;
     font-size: 1.4rem;

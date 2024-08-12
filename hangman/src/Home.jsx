@@ -1,12 +1,10 @@
 import './Home.css';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import hangmanImage from './assets/game_title.png';  // Replace with the actual hangman image path
 import content from './info';
-import { Button } from 'antd';
 const Home = () => {
   const navigate = useNavigate();
-
+  
   return (
     <>
       <div className="scrollable-container" >
@@ -14,7 +12,7 @@ const Home = () => {
         <div className='navbar'>
           <div className='btn-left'>
             <button onClick={() => navigate("/user")}>MENU</button>
-            <button>LEVEL</button>
+            <button onClick={() => navigate("/levels")}>LEVELS</button>
             <button>STORY</button>
           </div>
           <div className='btn-right'>
