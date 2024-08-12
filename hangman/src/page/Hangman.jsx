@@ -10,7 +10,8 @@ import { serverUrl } from '../config/serverUrl';
 import LevelComplete from './LevelComplete';
 import useFetchWord from '../hooks/useFetchWord';
 import LoadingPage from '../components/LoadingPage';
-import { isAuth, userDataRemove } from '../auth';
+import { isAuth, setGameState, userDataRemove } from '../auth';
+import GameState from '../components/game/GameState';
 
 const Hangman = () => {
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Hangman = () => {
         try {
             const res = await axios({
                 method: "GET",
-                url: `${serverUrl}/users/game-state/${_id}`,
+                url: `${serverUrl}/users/game-state`,
                 headers: {
                     "Authorization": `Bearer ${token}`
                 },
@@ -126,7 +127,7 @@ const Hangman = () => {
 
     useEffect(() => {
         if (wrongGuessed?.length > 6 && displayWord.length > 1) {
-            setStatus(() =>'lost');
+            setStatus(() => 'lost');
             gameStatus();
         }
         else if (wrongGuessed.length >= 0) {
@@ -144,6 +145,10 @@ const Hangman = () => {
 
         if (status === "won") {
             message.success("Level Complete\nKindly Go to the next Scene✅");
+            if (currentScene.next_scene === -1) {
+                setStatus("finished")
+                
+            }
         }
 
         return false;
@@ -214,7 +219,7 @@ const Hangman = () => {
 
     if (error) {
         message.error("Error occured!")
-        setTimeout(() =>{navigate("/user")}, 5000)
+        setTimeout(() => { navigate("/user") }, 5000)
         return (
             <div></div>
         )
@@ -222,8 +227,9 @@ const Hangman = () => {
 
     const handleNextScene = async () => {
         console.log("NEXT SCENE : ", currentScene.next_scene)
+        console.log(status)
         if (currentScene.next_scene === -1) {
-            navigate("/gamewon")
+            setStatus("finished")
             return;
         }
         await LevelComplete(currentScene.next_scene)
@@ -232,41 +238,44 @@ const Hangman = () => {
     }
     return (
         <LoadingPage loading={loading || load}>
-            <div className="mainn-container" style={{ backgroundImage: `url(${bgImage})` }}>
+            <GameState gameState={status} navigate={navigate}>
 
-                <div className='hint-container'>
-                    <Button onClick={getHint}>Hint {hint}</Button>
-                </div>
-                <div className='scene-number'>
-                    Scene {currentScene.scene_number}
-                </div>
-                <button className='menu-button' onClick={() => navigate("/user")}>
-                    MENU
-                </button>
-                <div className='hangmanContainer'>
-                    {hangmanImg && <img src={hangmanImg} alt="Hangman" className='hangman' />}
-                    <img src={branch} alt='Branch' className='branch'></img>
-                    <div className='wrong-guess'>
-                        <div className='wrong-guess-inner-container'>
-                            {wrongGuessed?.map((letter, index) => (
-                                <p key={index}>{letter}</p>
-                            ))}
+                <div className="mainn-container" style={{ backgroundImage: `url(${bgImage})` }}>
+
+                    <div className='hint-container'>
+                        <Button onClick={getHint}>Hint {hint}</Button>
+                    </div>
+                    <div className='scene-number'>
+                        Scene {currentScene.scene_number}
+                    </div>
+                    <button className='menu-button' onClick={() => navigate("/user")}>
+                        MENU
+                    </button>
+                    <div className='hangmanContainer'>
+                        {hangmanImg && <img src={hangmanImg} alt="Hangman" className='hangman' />}
+                        <img src={branch} alt='Branch' className='branch'></img>
+                        <div className='wrong-guess'>
+                            <div className='wrong-guess-inner-container'>
+                                {wrongGuessed?.map((letter, index) => (
+                                    <p key={index}>{letter}</p>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className='word-container'>
-                    <div>
-                        <label>Enter Your Guess: </label>
-                        <div className='input-container'>
-                            <div>{displayWord?.join(' ')}</div>
+                    <div className='word-container'>
+                        <div>
+                            <label>Enter Your Guess: </label>
+                            <div className='input-container'>
+                                <div>{displayWord?.join(' ')}</div>
+                            </div>
                         </div>
                     </div>
+                    {status === "won" && (
+                        <button className='next-scene' onClick={handleNextScene} autoFocus>Next Scene</button>
+                    )}
                 </div>
-                {status === "won" && (
-                    <button className='next-scene' onClick={handleNextScene} autoFocus>Next Scene</button>
-                )}
-            </div>
+            </GameState>
         </LoadingPage>
     );
 };

@@ -24,7 +24,7 @@ const GameWonOverlay = ({ onMenuClick, onRestartClick }) => {
           <div className='rect' />
         </div>
         <div className='state-desc'>
-          Crastus is <span style={{ color: '#00FF29' }}>saved!</span>
+          Crastus is <span style={{ color: '#00FF29' }}>saved! </span>
           Your wisdom and perseverance have pierced through the darkness, sparing him from the gallows.
           <div className='sep' />
           The light of hope shines brightly once more. Prepare yourself for the next challenge as the journey continues

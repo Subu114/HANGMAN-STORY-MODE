@@ -1,6 +1,7 @@
 import axios from "axios"
 import { serverUrl } from "../config/serverUrl"
 import { token } from "../config/userData"
+import { message } from "antd"
 
 const userAuthenticated = (response) => {
     localStorage.setItem("user", JSON.stringify(response.data.user))
@@ -55,19 +56,40 @@ const getScene = () => {
 }
 
 const setGameState = async (user_id, scene_id, display_word, wrong_guessed, hint) => {
-    display_word = display_word.join(' ')
-    wrong_guessed = wrong_guessed.join(' ') ? wrong_guessed.join(' ') : ""
-    console.log(wrong_guessed)
-    const res = await axios({
-        method: "POST",
-        url: `${serverUrl}/users/game-state/create`,
-        headers: {
-            "Authorization": `Bearer ${token}`
-        },
-        data : {user_id, scene_id, display_word, wrong_guessed, hint}
-    });
-
-    console.log("GAME STATE SET SUCCESSFULLY")
+    try {
+        display_word = display_word.join(' ')
+        wrong_guessed = wrong_guessed.join(' ') ? wrong_guessed.join(' ') : ""
+        console.log(wrong_guessed)
+        const res = await axios({
+            method: "POST",
+            url: `${serverUrl}/users/game-state/create`,
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            data : {user_id, scene_id, display_word, wrong_guessed, hint}
+        });
+    
+        console.log("GAME STATE SET SUCCESSFULLY")
+    } catch (error) {
+        message.error("Error changing scene/level")
+    }
 }
 
-export { userAuthenticated, userDataRemove, isAuth, isAdmin, setScene, setGameState, setUserData}
+const restartGame = async() => {
+    try {
+        const res = await axios({
+            method : "DELETE",
+            url : `${serverUrl}/users/game-state/delete`,
+            headers : {
+                Authorization : `Bearer ${token}`
+            }
+        })
+        message.success(res.data.message)
+        return true
+    } catch (error) {
+        message.error("Error while restarting game")
+        return false
+    }
+}
+
+export { userAuthenticated, userDataRemove, isAuth, isAdmin, setScene, setGameState, setUserData, restartGame}

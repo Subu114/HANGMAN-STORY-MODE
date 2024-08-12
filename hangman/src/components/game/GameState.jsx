@@ -3,9 +3,10 @@ import GameWonOverlay from './GameWonOverlay';
 import GameLostOverlay from './GameLostOverlay';
 
 const GameState = ({children, gameState, navigate}) => {
+  console.log(gameState)
     return (
         <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {gameState === "won" && (
+          {gameState === "lost" && (
             <div style={{
               position: 'absolute',
               top: 0,
@@ -18,10 +19,10 @@ const GameState = ({children, gameState, navigate}) => {
               alignItems: 'center',
               zIndex: 10
             }}>
-              <GameWonOverlay onMenuClick={() => {navigate("/")}} onRestartClick={()  => {navigate("/user")}}/>
+              <GameLostOverlay onMenuClick={() => {navigate("/")}} onRestartClick={()  => {navigate("/user")}}/>
             </div>
           )}
-          {gameState === "as" && (
+          {gameState === "finished" && (
             <div style={{
               position: 'absolute',
               top: 0,
@@ -34,10 +35,10 @@ const GameState = ({children, gameState, navigate}) => {
               alignItems: 'center',
               zIndex: 10
             }}>
-              <GameWonOverlay/>
-            </div>
+              <GameWonOverlay onMenuClick={() => {navigate("/")}} onRestartClick={()  => {}}/>
+              </div>
           )}
-          <div style={{ pointerEvents: 'none'}}>
+          <div style={{ pointerEvents: (gameState == "pending" || gameState == "won") ?'all' : 'none'}}>
             {children}
           </div>
         </div>
