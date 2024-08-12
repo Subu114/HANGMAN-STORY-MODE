@@ -58,7 +58,7 @@ const SignIn = () => {
                 message.success("Signed In successfully", 5)
                 console.log("Successfully signed in")
                 setLoading(false)
-                setTimeout(() => { navigate("/user") }, 1000)
+                navigate("/user")
             }
         } catch (error) {
             console.log("Error : ", error.response.data.message)
