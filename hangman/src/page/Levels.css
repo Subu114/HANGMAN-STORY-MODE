@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Cinzel';
+    src: url('../fonts/Cinzel/Cinzel-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Cinzel-Decorative';
+    src: url('../fonts/Cinzel_Decorative/CinzelDecorative-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Marck-Script';
+    src: url('../fonts/MarckScript-Regular.ttf');
+}
+
+.level-main-container {
+    /* background-color: wheat; */
+    color: white;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    z-index: 10
+}
+
+.level-header-wrapper {
+    width: fit-content;
+    margin-left: 5%;
+    margin-top: 4%;
+}
+
+.level-header {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.level-header hr {
+    width: 95%;
+    height: 0.5px;
+    margin-top: 0;
+    margin-right: 3%;
+}
+
+.level-title {
+    font-size: larger;
+    font-family: Cinzel;
+}
+
+.level-description {
+    font-family: Cinzel-Decorative;
+    font-size: medium;
+    text-align: right;
+    padding-right: 7%;
+}
+
+.level-main-container {
+    color: white;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    z-index: 10;
+}
+
+.level-header-wrapper {
+    flex-shrink: 0;
+}
+
+.level-header {
+    display: inline-block;
+    text-wrap: nowrap;
+    padding: 10px;
+    margin-left: 5%;
+}
+
+.level-body {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* padding: 10px; */
+}
+
+.levels-scroll {
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    max-height: 100%;
+    width: 100%;
+    padding-right: 10px;
+}
+
+.levels-scroll::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.levels-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
