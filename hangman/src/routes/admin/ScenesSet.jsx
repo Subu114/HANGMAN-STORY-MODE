@@ -1,16 +1,17 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { serverUrl } from "../../config/serverUrl"
-
+import "../../components/SceneDisplay.css"
 import { downloadImgUrl, uploadImage } from '../../config/handleImages';
 import { sceneFolder } from '../../config/serverFolders';
 import { isAdmin } from '../../auth';
 import { useNavigate } from 'react-router-dom';
+import { token } from '../../config/userData';
 const ScenesSet = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(!isAdmin())
+        if (!isAdmin())
             return navigate("/")
     }, [])
 
@@ -21,7 +22,8 @@ const ScenesSet = () => {
         scene_clue: "",
         scene_word: "",
         scene_img: "",
-        next_scene: -1
+        next_scene: -1,
+        level: 0
     })
 
     const [img, setImg] = useState('')
@@ -61,10 +63,17 @@ const ScenesSet = () => {
                 return;
             }
             console.log(scene)
-            const res = await axios.post(`${serverUrl}/scenes/create`, scene)
+            const res = await axios({
+                method : "POST",
+                url : `${serverUrl}/scenes/create`,
+                data : scene,
+                headers : {
+                    Authorization : `Bearer ${token}`
+                }
+            })
             console.log(res.data.message)
         } catch (error) {
-            console.error("Error in creating scene:", error.response.data.message)
+            console.error("Error in creating scene:",error.response ? error.response.data.message : error.essage)
         }
     }
 
@@ -74,8 +83,11 @@ const ScenesSet = () => {
     }
 
     return (
-        <div style={{ color: "white" }} autoFocus>
-            <form onSubmit={handleSubmit}>
+        <div className='scene-card'>
+            <form onSubmit={handleSubmit} className='scene-form'>
+                <label>Level :</label>
+                <input type='number' required name='level' onChange={handleChange} /> <br /><br />
+
                 <label>Scene Number:</label>
                 <input type='number' required name='scene_number' onChange={handleChange} /> <br /><br />
 
@@ -97,8 +109,8 @@ const ScenesSet = () => {
                 <label>Scene Img Link:</label>
                 <input type='file' required minLength={5} name='scene_img' onChange={handleImgUpload} /> <br /><br />
 
-                <button type="submit">Submit Data</button>
-                <button onClick={handleViewData}>View Entered Data</button>
+                <button type="submit" className='submit-button'>Submit Data</button>
+                <button onClick={handleViewData} className='view-button'>View Entered Data</button>
             </form>
         </div>
     )

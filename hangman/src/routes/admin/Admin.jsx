@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import ScenesDisplay from './ScenesDisplay'
-import { useNavigate } from 'react-router-dom'
-import { isAdmin, userDataRemove } from '../../auth';
 
+import { useNavigate } from 'react-router-dom'
+import { isAdmin } from '../../auth';
+import "./Admin.css"
 const Admin = () => {
     const navigate = useNavigate();
     useEffect(() => {
@@ -12,10 +12,12 @@ const Admin = () => {
         }
     })
     return (
-        <div >
-            <button onClick={() => {navigate("/scenedisplay")}}>SHOW SCENES</button>
+        <div className='admin-main'>
+            <h1>ADMIN PAGE</h1>
+            <button onClick={() => {navigate("/adminlevels")}}>MANAGE LEVELS</button>
             <button onClick={() => {navigate("/sceneset")}}>Create SCENE</button>
-            <button onClick={() => {navigate("/gamefiles")}}>Create SCENE</button>
+            <button onClick={() => {navigate("/scenedisplay")}}>SHOW SCENES</button>
+            <button onClick={() => {navigate("/gamefiles")}}>Game Fileds</button>
         </div>
     )
 }
