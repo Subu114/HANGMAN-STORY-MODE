@@ -11,10 +11,10 @@ import SignUp from './page/SignUp';
 import SignIn from './page/SignIn';
 import Admin from './routes/admin/Admin';
 import User from './routes/user/User';
-import Game from './page/Game';
 import GameWon from './page/GameWon';
 import GameFiles from './routes/admin/GameFiles';
 import Levels from './page/Levels';
+import AdminLevels from './routes/admin/AdminLevels';
 
 
 function App() {
@@ -35,6 +35,7 @@ function App() {
         <Route path="/scenedisplay" element={<ScenesDisplay />} />
         <Route path="/sceneset" element={<ScenesSet />} />
         <Route path="/gamefiles" element={<GameFiles />} />
+        <Route path="/adminlevels" element={<AdminLevels />} />
 
 
         <Route path="/signup" element={<SignUp />} />
@@ -43,7 +44,6 @@ function App() {
 
         <Route path="/user" element={<User />} />
         <Route path="/gamewon" element={<GameWon />} />
-        <Route path="/game" element={<Game />} />
 
 
       </Routes>
