@@ -14,7 +14,6 @@ const useFetchWord = (sceneNumber) => {
         const fetchData = async () => {
             try {
                 setLoading(true)
-                console.log(token)
                 const response = await axios({
                     method: "POST",
                     url: `${serverUrl}/scenes/word/${sceneNumber}`,
