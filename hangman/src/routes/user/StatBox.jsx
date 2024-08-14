@@ -1,31 +1,57 @@
 import React, { useEffect, useState } from 'react'
 import "./User.css"
 import { userDataRemove } from '../../auth'
+import { message } from 'antd';
+import axios from 'axios';
+import { serverUrl } from '../../config/serverUrl';
+import { token } from '../../config/userData';
 const StatBox = ({ navigate }) => {
     const [userData, setUserData] = useState(null);
-    
-    useEffect(() => {
-        setUserData(() => {
-            const val = JSON.parse(localStorage.getItem("user"))
-            if (!val)
-                return null;
-            return val
-        })
 
-    }, [])
+    useEffect(() => {
+        async function getStats() {
+            try {
+                const res = await axios({
+                    method: "GET",
+                    url: `${serverUrl}/users/stats`,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                const stats = res.data.stats;
+                const val = JSON.parse(localStorage.getItem('user'));
+
+                // Merging stats and val into userData state
+                setUserData(prevData => ({
+                    ...prevData,
+                    ...stats,
+                    username : val.username,
+                    email : val.email,
+                }));
+            } catch (error) {
+                if(error?.response?.status === 404)
+                {
+                    message.info("Stats not loaded! Start the game to see your stats.")
+                }
+            }
+        }
+
+        getStats()
+
+    }, [token, serverUrl])
 
     const getChapterText = (val) => {
-        switch(val){
-            case 1 : return "One";
-            case 2 : return "Two";
-            case 3 : return "Three";
-            case 4 : return "Four";
-            case 5 : return "Five";
-            case 6 : return "Six";
-            case 7 : return "Seven";
-            case 8 : return "Eight";
-            case 9 : return "Nine";
-            default : return "N/A"
+        switch (val) {
+            case 1: return "One";
+            case 2: return "Two";
+            case 3: return "Three";
+            case 4: return "Four";
+            case 5: return "Five";
+            case 6: return "Six";
+            case 7: return "Seven";
+            case 8: return "Eight";
+            case 9: return "Nine";
+            default: return String(val)
         }
     }
 
@@ -43,18 +69,18 @@ const StatBox = ({ navigate }) => {
                     <p>{userData?.username}</p>
                 </div>
                 <div className='current-level'>
-                    <h3>CURRENT LEVEL</h3>
+                    <h3>CURRENT STATS</h3>
                     <hr />
                     <div className='attr-val-box'>
                         <div className='attributes'>
-                            <h4>CHAPTER</h4>
+                            <h4>LEVEL</h4>
                             <h4>SCENE</h4>
                             <h4>ACHIECEMENTS</h4>
                         </div>
                         <div className='values'>
-                            <p>{getChapterText(userData?.chapter)}</p>
-                            <p>{userData?.scene}</p>
-                            <p>{userData?.achievements}</p>
+                            <p>{getChapterText(userData?.chapter)}  </p>
+                            <p>{userData?.scene ? userData?.scene : 'none'}</p>
+                            <p>{userData?.achievements ? userData.achievements : 'none'}</p>
 
                         </div>
                     </div>

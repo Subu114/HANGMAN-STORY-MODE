@@ -26,10 +26,11 @@
     height: 12%;
     display: flex;
     align-items: center;
+
 }
 .header button:hover{
     cursor: pointer;
-    color: darkred;
+    transform: scale(1.2);
 }
 .header button{
     /* border: 2px solid white; */
@@ -37,7 +38,7 @@
     border: none;
     color: white;
     font-weight: bolder;
-    font-size: 1.3rem;
+    font-size: 1.7rem;
     padding: 2% 4%;
 }
 
@@ -60,7 +61,8 @@
 
 }
 .personal-details button{
-    background-color: rgba(255, 255, 255, 0.4);
+    /* background-color: rgba(255, 255, 255, 0.4); */
+    background-color: transparent;
     width: 250px;
     height: 250px;
     border-radius: 100%;
@@ -87,12 +89,24 @@
 
 .continue-button {
     display: flex;
-    align-self: flex-end;
-    justify-content: center;
-    flex-direction: column;
-
     flex: 1;
-    padding: 20px;
+    align-self: flex-end; 
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    border-radius: 40px;
+}
+.cont{
+    /* display: flex;
+    justify-content: center;
+    border-radius: 40px;
+    width: 40%;
+    border-image: linear-gradient(45deg, #0085FF, #CC00FF) 10;
+    border-image-slice: 30 30 30 20 30 30; */
+    /* border-image-repeat: round; */
+    border: 5px solid transparent;
+    border-radius: 100px;
+    overflow: hidden;
 }
 
 
@@ -111,6 +125,8 @@
     height: 70%;
     display: flex;
     flex-direction: column;
+    font-family: Inter;
+    font-size: 1.2rem;
 }
 
 .details {
@@ -123,20 +139,27 @@
     font-weight: lighter;
 }
 .account, .username {
+    text-transform: uppercase;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
-.account p, .username p{
-    font-weight: lighter;
-    font-size: 0.7rem;
-    color: rgb(179, 155, 155);
+.account p, .username p, .values p{
+    font-style: italic;
+    font-weight: 100;
+    font-size: 0.8rem;
+    margin-left: 10px;
+    text-transform: none;
 }
 
 .current-level{
     display: flex;
     flex-direction: column;
     /* align-items: center; */
+}
+.current-level hr{
+    width: 100%;
 }
 .attr-val-box{
     display: flex;
@@ -147,26 +170,31 @@
 .attributes {
     margin-right: 5%;
     text-align: center;
+    font-size: 0.8rem;
 }
 .values {
     margin-left: 5%;
     text-align: center;
 }
-.values p{
-    
-    color: rgb(179, 155, 155);
-}
+
 
 .stats-box button{
     border-radius: 20px;  
     position: relative;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: transparent;
     height: 40px;
     width: 20%;
     margin: 0 2% 2% 0;
     align-self: flex-end;
     font-size: 1rem;
-    color: black;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 3px solid #FF0000;
+}
+.stats-box button:hover{
+    cursor: pointer;
+    transform: scale(1.1);
 }
 
 h2{

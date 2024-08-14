@@ -6,41 +6,61 @@ import LoadingPage from '../../components/LoadingPage'
 import PersonalDetails from './PersonalDetails'
 import StatBox from './StatBox'
 import { useNavigate } from 'react-router-dom'
-import { isAuth } from '../../auth'
+import { isAdmin, isAuth } from '../../auth'
 import useFetchImage from '../../hooks/useFetchImage'
+import { game } from '../../page/game/game'
 
 
 const User = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
-    if(!isAuth())
+    if (!isAuth())
       return navigate("/signin")
 
   }, [])
-  const {loading, data} = useFetchImage(gameFolder, "user_portal")
+  const { loading: l, data } = useFetchImage(gameFolder, "user_portal")
   return (
-    <LoadingPage loading={loading}>
-      
+    <LoadingPage loading={loading || l}>
+
       <div className='main-container' style={{ backgroundImage: `url(${data})` }}>
-       
-            <div className='header'>
-              <button onClick={() => navigate("/")}>HOME</button>
-            </div>
 
-            <div className='body'>
+        <div className='header'>
+          <button onClick={() => navigate("/")}>HOME</button>
+        </div>
 
-              <PersonalDetails />
-              
-              <div className='continue-button'>
-                <GradientButton onClick = {() => navigate("/game")}>CONTINUE</GradientButton>
-              </div>
+        <div className='body'>
 
-              <div className='stats'>
-                <StatBox navigate={navigate} />
-              </div>
+          <PersonalDetails />
 
-            </div>
-          
+          <div className='continue-button'>
+            <GradientButton text={"CONTINUE"} onClick={async () => {
+              if (isAdmin()) {
+                return navigate("/admin")
+              }
+              setLoading(true)
+              const val = await game()
+              if (val === 100) {
+                navigate("/hangman")
+              }
+              else if(val){
+                setLoading(false)
+                navigate('/scenepage')
+              }
+              setLoading(false)
+
+            }}>CONTINUE</GradientButton>
+
+          </div>
+
+
+
+          <div className='stats'>
+            <StatBox navigate={navigate} />
+          </div>
+
+        </div>
+
       </div>
     </LoadingPage>
   )
