@@ -132,13 +132,13 @@ exports.deleteUser = async (req, res) => {
 
 exports.setGameState = async (req, res) => {
     try {
-        const { scene_id, display_word, wrong_guessed, hint } = req.body;
+        const { scene_id, display_word, wrong_guessed, hint, level } = req.body;
         const user_id = req.user.id;
         const userExists = await User.findById(user_id);
         if (!userExists) {
             return res.status(404).json({ message: "User not found" });
         }
-
+        console.log("level : ", level)
         const sceneExists = await Scene.findOne({ scene_number: scene_id });
         if (!sceneExists) {
             return res.status(404).json({ message: "Scene not found" });
@@ -156,7 +156,7 @@ exports.setGameState = async (req, res) => {
             return res.status(200).json({ message: "Game state updated successfully" });
         }
         else {
-            gameState = new UserGameState({ user_id : req.user.id, scene_id, display_word, wrong_guessed, hint });
+            gameState = new UserGameState({ user_id : req.user.id, scene_id, display_word, wrong_guessed, hint, level });
             await gameState.save();
             res.status(201).json({ message: "Game state created successfully" });
         }
@@ -209,4 +209,22 @@ exports.isAuth = async (req, res) => {
         res.status(500).json({ message: "Error while authenticating user" });
     }
 }
+exports.getStats = async (req, res) => {
+    try {
+        const id = req.user.id
+        console.log(id)
+        const gameState = await UserGameState.findOne({user_id : id})
+        if(!gameState)
+        {
+            console.log("no user")
+            return res.status(404).json({message : "no user found"})
+        }
+        res.status(200).json({ stats : {chapter : gameState.level, scene : gameState.scene_id}});
+    } catch (error) {
+        console.error("Error while getting user stats", error);
+        res.status(500).json({ message: "Error while getting user stats" });
+    }
+}
+
+
 

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const authenticateJWT = require('../middlewares/jwtAuthentication');
+const Scene = require('../models/scene');
 
 
 //Read all users
@@ -25,12 +26,15 @@ router.delete('/delete', authenticateJWT, userController.deleteUser);
 
 
 router.get("/check-username", userController.checkUsername)
+router.get("/stats", authenticateJWT, userController.getStats)
 
 router.post("/game-state/create", authenticateJWT, userController.setGameState)
 router.get("/game-state", authenticateJWT, userController.getGameState)
 router.delete("/game-state/delete", authenticateJWT, userController.deleteGameState)
 
 router.post("/auth", authenticateJWT, userController.isAuth)
+
+
 
 
 module.exports = router;

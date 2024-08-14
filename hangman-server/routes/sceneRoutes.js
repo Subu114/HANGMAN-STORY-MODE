@@ -7,9 +7,9 @@ const sceneController = require("../controllers/sceneController.js")
 
 router.get("/", authenticateJWT, sceneController.getAllScenes)
 
-router.get("/:sceneNumber", authenticateJWT, sceneController.getScene)
+router.get("/:sceneNumber/:level", authenticateJWT, sceneController.getScene)
 
-router.post("/word/:sceneNumber", authenticateJWT, sceneController.getSceneWord)
+router.post("/word/:sceneNumber/:level", authenticateJWT, sceneController.getSceneWord)
 
 router.post("/create", authenticateJWT, sceneController.putScene)
 router.post("/update", authenticateJWT, sceneController.updateScene)

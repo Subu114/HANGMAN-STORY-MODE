@@ -22,6 +22,10 @@ const userGameStateSchema = new Schema({
         type: Number,
         required: true
     },
+    level: {
+        type: Number,
+        required: true
+    },
 }, { timestamps: true });
 
 const UserGameState = mongoose.model("UserGameState", userGameStateSchema);

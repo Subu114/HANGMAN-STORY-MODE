@@ -5,7 +5,6 @@ const sceneSchema = new Schema({
     scene_number: {
         type: Number,
         required: true,
-        unique : true
     },
     scene_place : {
         type: String,
@@ -30,7 +29,11 @@ const sceneSchema = new Schema({
     next_scene : {
         type : Number,
         default : -1
-    }
+    },
+    level : {
+        type : Number,
+        default : -1
+    },
     
 }, { timestamps: true });
 
