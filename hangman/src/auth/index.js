@@ -51,25 +51,31 @@ const isAdmin = () => {
 const setScene = (response) => {
     localStorage.setItem("current-scene", JSON.stringify(response.data.scene))
 }
+const setLevel = (level) => {
+    localStorage.setItem("level", JSON.stringify(level))
+}
+const getLevel = () => {
+    return Number(localStorage.getItem("level"))
+}
 const getScene = () => {
     return (localStorage.getItem("current-scene"))
 }
 
 const setGameState = async (user_id, scene_id, display_word, wrong_guessed, hint) => {
     try {
+        const level = getLevel()
+        console.log(level)
         display_word = display_word.join(' ')
         wrong_guessed = wrong_guessed.join(' ') ? wrong_guessed.join(' ') : ""
-        console.log(wrong_guessed)
         const res = await axios({
             method: "POST",
             url: `${serverUrl}/users/game-state/create`,
             headers: {
                 "Authorization": `Bearer ${token}`
             },
-            data : {user_id, scene_id, display_word, wrong_guessed, hint}
+            data : { scene_id, display_word, wrong_guessed, hint, level}
         });
-    
-        console.log("GAME STATE SET SUCCESSFULLY")
+
     } catch (error) {
         message.error("Error changing scene/level")
     }
@@ -92,4 +98,15 @@ const restartGame = async() => {
     }
 }
 
-export { userAuthenticated, userDataRemove, isAuth, isAdmin, setScene, setGameState, setUserData, restartGame}
+export { 
+    userAuthenticated, 
+    userDataRemove, 
+    isAuth, 
+    isAdmin, 
+    setScene, 
+    setGameState, 
+    setUserData, 
+    restartGame,
+    setLevel,
+    getLevel
+}
