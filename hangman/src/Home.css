@@ -20,8 +20,18 @@ html {
     width: 100%;
     background-repeat: no-repeat;
     background-position: center;
-    background-size:cover;
-
+    background-size: cover;
+    
+}
+.navbar-init {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
 .navbar {
@@ -29,7 +39,22 @@ html {
     flex-direction: row;
     justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Semi-transparent background */
+    padding: 10px;
+    z-index: 1000;
+    transform: translateY(-100%);
+    /* Hide the navbar initially */
+    transition: transform 0.3s ease-in-out;
 }
+
+.navbar.visible {
+    transform: translateY(0); /* Show the navbar */
+  }
+  
 
 .btn-left {
     margin-left: 1%;
@@ -82,7 +107,8 @@ html {
     font-size: xx-large;
     height: 650px;
 }
-.play-button{
+
+.play-button {
     position: sticky;
     display: flex;
     left: 0;
@@ -92,28 +118,30 @@ html {
     justify-content: center;
     padding-bottom: 5%;
 }
-.play-button button{
+
+.play-button button {
     bottom: 10%;
     width: 10%;
     height: 50px;
     font-size: 1.4rem;
     background-color: rgba(0, 0, 0, 0.8);
-    color : red;
+    color: red;
     font-weight: bolder;
     border-radius: 15px;
 }
-.play-button button:hover{
+
+.play-button button:hover {
     cursor: pointer;
     width: 10%;
     height: 50px;
     font-size: 1.5rem;
     background-color: none;
-    color : red;
+    color: red;
     font-weight: bolder;
 }
 
 .story-container {
-    margin:5%;
+    margin: 5%;
     position: relative;
     bottom: 10px;
     padding: 2%;
