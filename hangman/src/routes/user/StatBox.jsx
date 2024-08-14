@@ -25,12 +25,11 @@ const StatBox = ({ navigate }) => {
                 setUserData(prevData => ({
                     ...prevData,
                     ...stats,
-                    username : val.username,
-                    email : val.email,
+                    username: val.username,
+                    email: val.email,
                 }));
             } catch (error) {
-                if(error?.response?.status === 404)
-                {
+                if (error?.response?.status === 404) {
                     message.info("Stats not loaded! Start the game to see your stats.")
                 }
             }
@@ -86,7 +85,15 @@ const StatBox = ({ navigate }) => {
                     </div>
                 </div>
             </div>
-            <button onClick={() => { userDataRemove(); return navigate("/") }}>Sign out</button>
+            <button onClick={() => {
+                message.info("Signing Out")
+                userDataRemove();
+                setTimeout(() => {
+                    message.success("Signed Out Successfully!")
+                    navigate("/")
+                }, 1000);
+            }}
+            >Sign out</button>
         </div>
     )
 }

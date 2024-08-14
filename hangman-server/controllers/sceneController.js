@@ -9,7 +9,7 @@ exports.getAllScenes = async (req, res) => {
             return res.status(403).json({ message: "UNAUTHORISED ACCESS" })
         }
         const scenes = await Scene.find({}).sort({ scene_number: 1 })
-        
+
         res.status(200).json({ scenes })
     } catch (error) {
         console.log("Error while fetching Scenes : ", error);
@@ -27,7 +27,7 @@ exports.getScene = async (req, res) => {
             console.log("No scene number provieded or invalid scene number ");
             return res.status(404).json({ message: "Please provide a valid Scene Number!" })
         }
-        const scene = await Scene.findOne({ scene_number: sceneNumber, level})
+        const scene = await Scene.findOne({ scene_number: sceneNumber, level })
         if (!scene) {
             console.log("The game is completed")
             return res.status(200).json({ message: "not found scenes re baba" })
@@ -85,11 +85,25 @@ exports.putScene = async (req, res) => {
         if (!(await isAdmin(req?.user?.id))) {
             return res.status(403).json({ message: "UNAUTHORISED ACCESS" })
         }
-        const { scene_number, scene_place, scene_story, scene_clue, scene_word, scene_img, next_scene, level } = req.body
+        const {
+            scene_number,
+            scene_place,
+            scene_story,
+            scene_clue,
+            scene_word,
+            scene_img,
+            next_scene,
+            level,
+            pre_progression,
+            post_progression,
+            pre_progression_img,
+            post_progression_img,
+
+        } = req.body
 
         console.log(req.body)
 
-        if (!scene_number || !scene_place || !scene_story || !scene_clue || !scene_word || !scene_img || !next_scene || !level) {
+        if (!scene_number || !scene_place || !scene_story || !scene_clue || !scene_word || !scene_img || !next_scene || !level || !pre_progression || !post_progression || !pre_progression_img || !post_progression_img) {
             console.error("Incomplete Scene Details Provided")
             return res.status(400).json({ message: "Please provide full Scene Details!" })
         }
@@ -106,7 +120,20 @@ exports.putScene = async (req, res) => {
 
         }
 
-        const scene = new Scene({ scene_number, scene_place, scene_story, scene_clue, scene_word, scene_img, next_scene, level })
+        const scene = new Scene({
+            scene_number,
+            scene_place,
+            scene_story,
+            scene_clue,
+            scene_word,
+            scene_img,
+            next_scene,
+            level,
+            pre_progression,
+            post_progression,
+            pre_progression_img,
+            post_progression_img,
+        })
         await scene.save()
 
         res.status(201).json({ message: "Scene created successfully", scene })
@@ -127,7 +154,7 @@ exports.deleteScene = async (req, res) => {
         sceneNumber = Number(sceneNumber);
 
         // Validate sceneNumber
-        if (isNaN(sceneNumber) || sceneNumber < 1 || sceneNumber > process.env.MAX_LEVELS) {
+        if (isNaN(sceneNumber) || sceneNumber < 1) {
             console.log("No scene number provided or invalid scene number");
             return res.status(400).json({ message: "Please provide a valid Scene Number!" });
         }
@@ -152,8 +179,21 @@ exports.updateScene = async (req, res) => {
         if (!(await isAdmin(req.user.id))) {
             return res.status(401).json({ message: "UNAUTHORISED ACCESS" })
         }
-        const { scene_number, scene_place, scene_story, scene_clue, scene_word, scene_img, next_scene, level } = req.body
+        const {
+            scene_number,
+            scene_place,
+            scene_story,
+            scene_clue,
+            scene_word,
+            scene_img,
+            next_scene,
+            level,
+            pre_progression,
+            post_progression,
+            pre_progression_img,
+            post_progression_img,
 
+        } = req.body
         if (!scene_number) {
             console.error("Scene Number not provided")
             return res.status(400).json({ message: "Scene Number is required to update the scene!" })
@@ -172,6 +212,10 @@ exports.updateScene = async (req, res) => {
         scene.scene_img = scene_img
         scene.next_scene = next_scene
         scene.level = level
+        scene.pre_progression = pre_progression
+        scene.post_progression = post_progression
+        scene.pre_progression_img = pre_progression_img
+        scene.post_progression_img = post_progression_img
 
         await scene.save()
 

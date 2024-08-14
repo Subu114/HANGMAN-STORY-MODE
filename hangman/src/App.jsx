@@ -17,6 +17,8 @@ import Levels from './page/Levels';
 import AdminLevels from './routes/admin/AdminLevels';
 import LevelsDisplay from './routes/admin/LevelsDisplay';
 import LevelSet from './routes/admin/LevelSet';
+import PreScene from './page/game/PreScene';
+import PostScene from './page/game/PostScene';
 
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
         <Route path="/scenepage" element={<ScenePage />} />
         <Route path="/clue" element={<Clue />} />
         <Route path="/hangman" element={<Hangman />} />
+        <Route path="/prescene" element={<PreScene />} />
+        <Route path="/postscene" element={<PostScene />} />
 
 
         <Route path="/admin" element={<Admin />} />

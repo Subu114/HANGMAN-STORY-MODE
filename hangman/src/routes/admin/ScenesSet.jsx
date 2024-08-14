@@ -1,20 +1,20 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { serverUrl } from "../../config/serverUrl"
-import "../../components/SceneDisplay.css"
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { serverUrl } from "../../config/serverUrl";
+import "../../components/SceneDisplay.css";
 import { downloadImgUrl, uploadImage } from '../../config/handleImages';
 import { sceneFolder } from '../../config/serverFolders';
 import { isAdmin } from '../../auth';
 import { useNavigate } from 'react-router-dom';
 import { token } from '../../config/userData';
 import { message } from 'antd';
+
 const ScenesSet = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAdmin())
-            return navigate("/")
-    }, [])
+        if (!isAdmin()) return navigate("/");
+    }, []);
 
     const [scene, setScene] = useState({
         scene_number: 0,
@@ -24,59 +24,65 @@ const ScenesSet = () => {
         scene_word: "",
         scene_img: "",
         next_scene: -1,
-        level: 0
-    })
-
-   
+        level: 0,
+        pre_progression: '',
+        post_progression: '',
+        pre_progression_img: '',
+        post_progression_img: '',
+    });
 
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setScene(prevScene => ({
             ...prevScene,
             [name]: value
-        }))
-    }
+        }));
+    };
 
-    const handleImgUpload = (e) => {
-        e.preventDefault()
-        const val = e.target.files[0];
-        uploadImage(val, sceneFolder, `Scene${scene.scene_number}L${scene.level}`).then(() => {
-            downloadImgUrl(sceneFolder, `Scene${scene.scene_number}L${scene.level}`).then((url) => {
-                setScene((val) => ({ ...val, ["scene_img"]: url }))
+    const handleImageUpload = (e, key, prefix = '') => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        const imageName = `${prefix}_Scene${scene.scene_number}L${scene.level}`;
+
+        uploadImage(file, sceneFolder, imageName).then(() => {
+            downloadImgUrl(sceneFolder, imageName).then((url) => {
+                setScene(prevScene => ({
+                    ...prevScene,
+                    [key]: url
+                }));
             }).catch(() => {
-
-            })
+                // message.error("Failed to download image URL.");
+            });
         }).catch(() => {
-        })
-
-    }
+            // message.error("Failed to upload image.");
+        });
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            if (scene.scene_img == "") {
-                console.log("Image url not set")
+            if (scene.scene_img === "") {
+                console.log("Image URL not set");
                 return;
             }
-            console.log(scene)
             const res = await axios({
-                method : "POST",
-                url : `${serverUrl}/scenes/create`,
-                data : scene,
-                headers : {
-                    Authorization : `Bearer ${token}`
+                method: "POST",
+                url: `${serverUrl}/scenes/create`,
+                data: scene,
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            })
-            message.success(res.data.message)
+            });
+            message.success(res.data.message);
         } catch (error) {
-            message.error(error.response ? error.response.data.message : error.essage)
+            message.error(error.response ? error.response.data.message : error.message);
         }
-    }
+    };
 
     const handleViewData = (e) => {
-        e.preventDefault()
-        console.log("Scene Object:", scene)
-    }
+        e.preventDefault();
+        console.log("Scene Object:", scene);
+    };
 
     return (
         <div className='scene-card'>
@@ -100,16 +106,28 @@ const ScenesSet = () => {
                 <input type='text' required minLength={5} name='scene_word' onChange={handleChange} /> <br /><br />
 
                 <label>Next Scene Number:</label>
-                <input type='number' required minLength={5} name='next_scene' onChange={handleChange} /> <br /><br />
+                <input type='number' required name='next_scene' onChange={handleChange} /> <br /><br />
 
                 <label>Scene Img Link:</label>
-                <input type='file' required onChange={handleImgUpload} /> <br /><br />
+                <input type='file' required onChange={(e) => handleImageUpload(e, 'scene_img')} /> <br /><br />
+
+                <label>Pre Scene Progression Story:</label>
+                <input type='text' required minLength={5} name='pre_progression' onChange={handleChange} /> <br /><br />
+
+                <label>Post Scene Progression Story:</label>
+                <input type='text' required minLength={5} name='post_progression' onChange={handleChange} /> <br /><br />
+
+                <label>Pre Scene Img</label>
+                <input type='file' required name='pre_progression_img' onChange={(e) => handleImageUpload(e, 'pre_progression_img', 'Pre')} /> <br /><br />
+
+                <label>Post Scene Img</label>
+                <input type='file' required name='post_progression_img' onChange={(e) => handleImageUpload(e, 'post_progression_img', 'Post')} /> <br /><br />
 
                 <button type="submit" className='submit-button'>Submit Data</button>
                 <button onClick={handleViewData} className='view-button'>View Entered Data</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default ScenesSet
+export default ScenesSet;

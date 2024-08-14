@@ -6,7 +6,7 @@ const sceneSchema = new Schema({
         type: Number,
         required: true,
     },
-    scene_place : {
+    scene_place: {
         type: String,
         required: true
     },
@@ -16,25 +16,41 @@ const sceneSchema = new Schema({
     },
     scene_clue: {
         type: String,
-        required : true
+        required: true
     },
     scene_word: {
         type: String,
-        required : true
+        required: true
     },
-    scene_img : {
-        type : String,
-        default : ""
+    scene_img: {
+        type: String,
+        default: ""
     },
-    next_scene : {
-        type : Number,
-        default : -1
+    next_scene: {
+        type: Number,
+        default: -1
     },
-    level : {
-        type : Number,
-        default : -1
+    level: {
+        type: Number,
+        default: -1
     },
-    
+    pre_progression: {
+        type: String,
+        required: true
+    },
+    post_progression: {
+        type: String,
+        required: true
+    },
+    pre_progression_img: {
+        type: String,
+        required: true
+    },
+    post_progression_img: {
+        type: String,
+        required: true
+    }
+
 }, { timestamps: true });
 
 

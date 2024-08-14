@@ -66,7 +66,7 @@ const ScenesDisplay = () => {
                 },
                 data : sceneObject
             });
-            message.success(`Scene ${sceneObject.scene_number} updated successfully`);
+            message.success(`Level ${sceneObject.level} Scene ${sceneObject.scene_number} updated successfully`);
             fetchScenes();
         } catch (err) {
             message.error("Error while updating Scene", err.response ? err.response.data.message : err.message);
