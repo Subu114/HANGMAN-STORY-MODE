@@ -1,0 +1,45 @@
+.image-manager {
+    color: white;
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #333;
+    color: white;
+}
+
+.image-preview {
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    border: 2px solid #444;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #1c86ee;
+}

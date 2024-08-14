@@ -7,6 +7,7 @@ import { sceneFolder } from '../../config/serverFolders';
 import { isAdmin } from '../../auth';
 import { useNavigate } from 'react-router-dom';
 import { token } from '../../config/userData';
+import { message } from 'antd';
 const ScenesSet = () => {
     const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const ScenesSet = () => {
         level: 0
     })
 
-    const [img, setImg] = useState('')
+   
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -37,20 +38,15 @@ const ScenesSet = () => {
     }
 
     const handleImgUpload = (e) => {
-        alert("Uploading img")
-        const val = e.target.files[0]
-        setImg(() => val)
-        uploadImage(img, sceneFolder, `Scene${scene.scene_number}`).then(() => {
-            downloadImgUrl(sceneFolder, `Scene${scene.scene_number}`).then((url) => {
+        e.preventDefault()
+        const val = e.target.files[0];
+        uploadImage(val, sceneFolder, `Scene${scene.scene_number}L${scene.level}`).then(() => {
+            downloadImgUrl(sceneFolder, `Scene${scene.scene_number}L${scene.level}`).then((url) => {
                 setScene((val) => ({ ...val, ["scene_img"]: url }))
-                alert("image uploaded successfully")
             }).catch(() => {
 
-                alert("image upload failed")
             })
         }).catch(() => {
-            alert("image upload failed")
-
         })
 
     }
@@ -71,9 +67,9 @@ const ScenesSet = () => {
                     Authorization : `Bearer ${token}`
                 }
             })
-            console.log(res.data.message)
+            message.success(res.data.message)
         } catch (error) {
-            console.error("Error in creating scene:",error.response ? error.response.data.message : error.essage)
+            message.error(error.response ? error.response.data.message : error.essage)
         }
     }
 
@@ -107,7 +103,7 @@ const ScenesSet = () => {
                 <input type='number' required minLength={5} name='next_scene' onChange={handleChange} /> <br /><br />
 
                 <label>Scene Img Link:</label>
-                <input type='file' required minLength={5} name='scene_img' onChange={handleImgUpload} /> <br /><br />
+                <input type='file' required onChange={handleImgUpload} /> <br /><br />
 
                 <button type="submit" className='submit-button'>Submit Data</button>
                 <button onClick={handleViewData} className='view-button'>View Entered Data</button>

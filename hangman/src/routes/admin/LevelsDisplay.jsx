@@ -7,25 +7,26 @@ import { useNavigate } from 'react-router-dom';
 import { token } from '../../config/userData';
 import { message } from 'antd';
 import "./ScenesDisplay.css"
+import LevelDisplay from '../../components/LevelDisplay';
 
-const ScenesDisplay = () => {
-    const [scenes, setScenes] = useState([]);
+const LevelsDisplay = () => {
+    const [levels, setLevels] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [searchLevel, setSearchLevel] = useState('');
-    const [searchNextScene, setSearchNextScene] = useState('');
+
 
     const navigate = useNavigate();
 
-    const fetchScenes = async () => {
+    const fetchLevels = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`${serverUrl}/scenes/`, {
+            const response = await axios.get(`${serverUrl}/levels/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            setScenes(response.data.scenes);
+            setLevels(response.data.levels);
         } catch (err) {
             setError(err);
         } finally {
@@ -37,52 +38,51 @@ const ScenesDisplay = () => {
         if (!isAdmin()) {
             return navigate("/");
         }
-        fetchScenes();
+        fetchLevels();
     }, []);
 
-    const deleteScene = async (sceneNumber) => {
+    const deleteLevel = async (levelNumber) => {
         try {
-            console.log(sceneNumber);
-            await axios.delete(`${serverUrl}/scenes/delete/${sceneNumber}`, {
+            console.log(levelNumber);
+            await axios.delete(`${serverUrl}/levels/delete/${levelNumber}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            message.success(`Scene ${sceneNumber} deleted successfully`);
-            fetchScenes();
+            message.success(`Level ${levelNumber} deleted successfully`);
+            fetchLevels();
         } catch (err) {
-            console.error("Error while deleting Scene:", err.response.data.message);
-            message.error("Error while deleting Scene");
+            console.error("Error while deleting Level:", err.response.data.message);
+            message.error("Error while deleting Level");
         }
     };
 
-    const updateScene = async (sceneObject) => {
+    const updateLevel = async (levelObject) => {
         try {
             await axios({
                 method : "POST",
-                url : `${serverUrl}/scenes/update`,
+                url : `${serverUrl}/levels/update`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
-                data : sceneObject
+                data : levelObject
             });
-            message.success(`Scene ${sceneObject.scene_number} updated successfully`);
-            fetchScenes();
+            message.success(`Level ${levelObject.level} updated successfully`);
+            fetchLevels();
         } catch (err) {
-            message.error("Error while updating Scene", err.response ? err.response.data.message : err.message);
+            message.error("Error while updating Level", err.response ? err.response.data.message : err.message);
         }
     };
 
-    const filteredScenes = scenes.filter(scene => {
+    const filteredLevels = levels.filter(level => {
         return (
-            (!searchLevel || scene.level === parseInt(searchLevel)) &&
-            (!searchNextScene || scene.scene_number === parseInt(searchNextScene))
+            (!searchLevel || level.level === parseInt(searchLevel))
         );
     });
 
     return (
         <div className="scenes-display">
-            <h1 style={{margin: "10px"}}>Levels and Scenes</h1>
+            <h1 style={{margin: "10px"}}>Levels</h1>
             <div className="search-container">
                 <input
                     type="number"
@@ -91,25 +91,19 @@ const ScenesDisplay = () => {
                     onChange={(e) => setSearchLevel(e.target.value)}
                     className="search-input"
                 />
-                <input
-                    type="number"
-                    placeholder="Search by Next Scene"
-                    value={searchNextScene}
-                    onChange={(e) => setSearchNextScene(e.target.value)}
-                    className="search-input"
-                />
+
             </div>
             {error && <div className="error-message">Something Went Wrong</div>}
             {loading ? <div className="loading-message">Loading...</div> : (
                 <div className="scenes-list">
-                    {filteredScenes.length > 0 ? (
-                        <p style={{margin : '10px'}}>Scenes Found: {filteredScenes.length}</p>
+                    {filteredLevels.length > 0 ? (
+                        <p style={{margin : '10px'}}>Level Found: {filteredLevels.length}</p>
                     ) : (
-                        <p style={{margin : '10px'}}>No scenes found</p>
+                        <p style={{margin : '10px'}}>No Levels found</p>
                     )}
-                    {filteredScenes.map((ele, index) => (
+                    {filteredLevels.map((ele, index) => (
                         <div key={index} className="scene-item">
-                            <SceneDisplay user={ele} onDelete={deleteScene} onUpdate={updateScene} />
+                            <LevelDisplay user={ele} onDelete={deleteLevel} onUpdate={updateLevel} />
                         </div>
                     ))}
                 </div>
@@ -118,4 +112,4 @@ const ScenesDisplay = () => {
     );
 }
 
-export default ScenesDisplay;
+export default LevelsDisplay;

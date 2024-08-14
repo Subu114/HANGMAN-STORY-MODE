@@ -4,6 +4,7 @@ import { downloadImgUrl, uploadImage } from '../../config/handleImages';
 import { useNavigate } from 'react-router-dom';
 import { isAdmin, userDataRemove } from '../../auth';
 import "./GameFiles.css"
+import { message } from 'antd';
 const GameFiles = () => {
     const [sceneImg, setSceneImg] = useState('');
 
@@ -18,7 +19,6 @@ const GameFiles = () => {
     })
 
     const handleImgUpload = (e) => {
-        alert("Uploading img")
         const val = e.target.files[0]
         if (!val || val == undefined)
             return;
@@ -49,42 +49,45 @@ const GameFiles = () => {
 
 
     return (
-        <div className="image-manager">
-            <h1>Set Image</h1>
-            <form onSubmit={handleSubmit} className="form-section">
-                <label>Enter File Name</label>
-                <input
-                    type="text"
-                    value={file}
-                    onChange={(e) => setFile(e.target.value)}
-                    className="input-field"
-                />
-                <h4>Upload Image</h4>
-                <input
-                    type="file"
-                    onChange={handleImgUpload}
-                    required
-                    className="input-field"
-                />
-            </form>
-            <hr />
-            <form onSubmit={handleImageView} className="form-section">
-                <h1>Get Image</h1>
-                <label>Enter File Name</label>
-                <input
-                    type="text"
-                    value={file2}
-                    onChange={(e) => setFile2(e.target.value)}
-                    className="input-field"
-                />
-                <h4>Image</h4>
-                {sceneImg && (
-                    <img src={sceneImg} width="300px" className="image-preview" alt="Scene" />
-                )}
-                <button type="submit" className="submit-button">Update Data</button>
-            </form>
-        </div>
+        <>
+            <div className="image-manager" style={{marginTop : '10px',marginBottom : '10px',}}>
+                <h1>Set Image</h1>
+                <form onSubmit={handleSubmit} className="form-section">
+                    <label>Enter File Name</label>
+                    <input
+                        type="text"
+                        value={file}
+                        onChange={(e) => setFile(e.target.value)}
+                        className="input-field"
+                    />
+                    <h4>Upload Image</h4>
+                    <input
+                        type="file"
+                        onChange={handleImgUpload}
+                        required
+                        className="input-field"
+                    />
+                </form>
+            </div>
+            <div className="image-manager">
+                <form onSubmit={handleImageView} className="form-section">
+                    <h1>Get Image</h1>
+                    <label>Enter File Name</label>
+                    <input
+                        type="text"
+                        value={file2}
+                        onChange={(e) => setFile2(e.target.value)}
+                        className="input-field"
+                    />
+                    <h4>Image</h4>
+                    {sceneImg && (
+                        <img src={sceneImg} width="300px" className="image-preview" alt="Scene" />
+                    )}
+                    <button type="submit" className="submit-button">View</button>
+                </form>
+            </div>
 
+        </>
     );
 }
 
