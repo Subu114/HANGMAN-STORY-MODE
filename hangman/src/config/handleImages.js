@@ -5,12 +5,13 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const uploadImage = async (img, folderName, imgName) => {
     const imgRef = ref(db, `${folderName}/${imgName}`);
+    message.info("Uploading Image!")
     try {
         await uploadBytes(imgRef, img);
-        console.log("Image Uploaded successfully");
+        message.success("Image Uploaded successfully");
         return true;
     } catch (e) {
-        console.error("Error in uploading image: ", e);
+        message.error("Error in uploading image");
         return false;
     }
 };
