@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Itim';
-    src: url('../fonts/Itim-Regular.ttf');
+    src: url('../../fonts/Itim-Regular.ttf');
 }
 
 .mainn-container {
@@ -39,11 +39,10 @@
 
 .hangman {
     position: absolute;
-    width: 60%;
-    top: 7%;
+    width: 15%;
+    top:20%;
     left: 50%;
     transform: translateX(-50%);
-
 }
 
 .word-container {

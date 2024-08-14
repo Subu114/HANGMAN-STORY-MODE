@@ -4,7 +4,7 @@ import "./User.css"
 
 import { userFolder } from '../../config/serverFolders';
 import { downloadImgUrl, uploadImage } from '../../config/handleImages';
-import { setUserData } from '../../auth';
+import { setUserData as setToLocal } from '../../auth';
 import axios from 'axios';
 import { serverUrl } from '../../config/serverUrl';
 import { message } from 'antd';
@@ -19,7 +19,7 @@ const PersonalDetails = () => {
     useEffect(() => {
         setUserData(() => {
             const val = JSON.parse(localStorage.getItem("user"))
-            if(!val)
+            if (!val)
                 return null;
             setImg(val.photo)
             return val
@@ -27,40 +27,31 @@ const PersonalDetails = () => {
 
     }, [])
 
-    const handleFileUpload = (e) => {
+    const handleFileUpload = async (e) => {
         const val = e.target.files[0]
-        
+
         try {
             message.info("Uploading img")
-            uploadImage(val, userFolder, `${userData._id}`).then(() => {
-                downloadImgUrl(userFolder, `${userData._id}`).then((url) => {
-                    axios({
-                        method: "POST",
-                        url: `${serverUrl}/users/update`,
-                        data: { _id: userData._id, photo: url },
-                        headers: {
-                            "Authorization": `Bearer ${token}`
-                        },
-                    })
-                        .then((res) => {
-                            console.log("DATA : ", res.data.user)
-                            setUserData(res.data.user)
-                            setImg(res.data.user.photo)
-                            message.success("Image uploaded successfully")
-                        })
-                        .catch((e) => {
-                            console.log("Error : ", e);
-                        })
-                }).catch(() => {
-                    message.error("image upload failed", 3)
-                })
-            }).catch(() => {
-                message.error("image upload failed", 3)
-                
+            await uploadImage(val, userFolder, `${userData._id}`)
+            const url = await downloadImgUrl(userFolder, `${userData._id}`)
+            const res = await axios({
+                method: "POST",
+                url: `${serverUrl}/users/update`,
+                data: { photo: url },
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
             })
+
+            console.log("DATA : ", res.data.user)
+            setUserData(res.data.user)
+            setToLocal(res.data.user)
+            setImg(res.data.user.photo)
+            message.success("Image uploaded successfully")
+
         } catch (error) {
             console.log("error : ", error)
-            message.error("image upload failed", 3)
+            message.error("Image upload failed!", 3)
 
         }
     }

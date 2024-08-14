@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { CircleLoader } from 'react-spinners';
 
 const LoadingPage = ({children, loading}) => {

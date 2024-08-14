@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import clueBg from '../assets/clue.png'
+import clueBg from '../../assets/clue.png'
 import "./Clue.css"
-import nextBtn from "../assets/clue_next_btn.png"
-import UseCurrentScene from '../hooks/UseCurrentScene'
+import nextBtn from "../../assets/clue_next_btn.png"
+import UseCurrentScene from '../../hooks/UseCurrentScene'
 import { useNavigate } from 'react-router-dom'
-import { isAuth } from '../auth'
+import { isAuth } from '../../auth'
 const Clue = ({ }) => {
     const currentScene = UseCurrentScene()
     const sceneNumber = `Scene ${currentScene.scene_number}`

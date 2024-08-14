@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { sceneWordKey } from '../config/sceneWordKey';
 import { token } from '../config/userData';
 import { serverUrl } from '../config/serverUrl';
+import { getLevel } from '../auth';
 
 
 const useFetchWord = (sceneNumber) => {
@@ -14,9 +15,10 @@ const useFetchWord = (sceneNumber) => {
         const fetchData = async () => {
             try {
                 setLoading(true)
+                const level = getLevel()
                 const response = await axios({
                     method: "POST",
-                    url: `${serverUrl}/scenes/word/${sceneNumber}`,
+                    url: `${serverUrl}/scenes/word/${sceneNumber}/${level}`,
                     data: { unique_token: sceneWordKey },
                     headers: {
                         Authorization: `Bearer ${token}`

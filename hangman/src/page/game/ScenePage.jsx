@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './ScenePage.css';
-import nextButtonImage from '../assets/button_next.png';
-import backButtonImage from '../assets/button_back.png';
+import nextButtonImage from '../../assets/button_next.png';
+import backButtonImage from '../../assets/button_back.png';
 import { useNavigate } from 'react-router-dom';
 
-import UseCurrentScene from '../hooks/UseCurrentScene';
-import { isAuth } from '../auth';
-import LoadingPage from '../components/LoadingPage';
-import { message } from 'antd';
+import UseCurrentScene from '../../hooks/UseCurrentScene';
+import { isAuth } from '../../auth';
+import LoadingPage from '../../components/LoadingPage';
 
 const ScenePage = () => {
     const currentScene = UseCurrentScene();
@@ -21,25 +20,25 @@ const ScenePage = () => {
     const handleKeyPress = (e) => {
         const val = e.key;
 
-        if (val === "ArrowLeft"){
-            
+        if (val === "ArrowLeft") {
+
         }
-        else if (val === "ArrowRight"){
+        else if (val === "ArrowRight") {
             navigate("/clue")
         }
 
-       setp(p => !p)
+        setp(p => !p)
     };
     useEffect(() => {
         if (!isAuth()) {
             return navigate("/")
-        
+
         }
         setTimeout(() => {
             setLoading(false)
         }, 1500)
     }, [])
-    
+
     useEffect(() => {
         document.addEventListener('keydown', handleKeyPress);
         return () => {
@@ -50,7 +49,7 @@ const ScenePage = () => {
     return (
         <LoadingPage loading={loading}>
 
-            <div className="scene-container" style={{ backgroundImage: `url('${bgImage}')`}}>
+            <div className="scene-container" style={{ backgroundImage: `url('${bgImage}')` }}>
                 <div className='scene-header'>
                     <h1>{sceneNumber}</h1>
                 </div>

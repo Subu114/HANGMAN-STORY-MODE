@@ -1,17 +1,17 @@
 import { Button, message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import UseCurrentScene from '../hooks/UseCurrentScene';
+import UseCurrentScene from '../../hooks/UseCurrentScene';
 import "./Hangman.css";
-import HangmanImage from '../data/HangmanImg';
+import HangmanImage from '../../data/HangmanImg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { _id, token } from '../config/userData';
-import { serverUrl } from '../config/serverUrl';
+import { _id, token } from '../../config/userData';
+import { serverUrl } from '../../config/serverUrl';
 import LevelComplete from './LevelComplete';
-import useFetchWord from '../hooks/useFetchWord';
-import LoadingPage from '../components/LoadingPage';
-import { isAuth, setGameState, userDataRemove } from '../auth';
-import GameState from '../components/game/GameState';
+import useFetchWord from '../../hooks/useFetchWord';
+import LoadingPage from '../../components/LoadingPage';
+import { isAuth, userDataRemove } from '../../auth';
+import GameState from '../../components/game/GameState';
 
 const Hangman = () => {
     const navigate = useNavigate();
@@ -23,6 +23,7 @@ const Hangman = () => {
     const [wrongGuessed, setWrongGuessed] = useState([]);
     const [hangmanImg, setHangmanImg] = useState(null);
     const [load, setLoad] = useState(true);
+
 
     const bgImage = currentScene.scene_img;
     const branch = HangmanImage[10];
@@ -64,7 +65,9 @@ const Hangman = () => {
                 return navigate("/user")
             }
         }
-        return () => controller.abort();
+        return () => {
+            controller.abort();
+        }
     };
 
     useEffect(() => {
@@ -72,8 +75,9 @@ const Hangman = () => {
             message.error("User not authenticated!", 5)
             return navigate("/")
         }
-
-        fetchData();
+        (async () => {
+            await fetchData();
+        })()
     }, []);
 
     const postGameState = async () => {
@@ -120,22 +124,22 @@ const Hangman = () => {
         if (displayWord.length <= 1)
             return;
         if (!displayWord?.includes("_")) {
-            setStatus('won');
-            gameStatus();
+            setStatus(() => 'won');
         }
     }, [displayWord]);
 
     useEffect(() => {
-        if (wrongGuessed?.length > 6 && displayWord.length > 1) {
+        if (wrongGuessed?.length >= 6 && displayWord.length > 1) {
             setStatus(() => 'lost');
-            gameStatus();
         }
         else if (wrongGuessed.length >= 0) {
             setHangmanImg(HangmanImage[wrongGuessed.length]);
         }
     }, [wrongGuessed]);
 
-
+    useEffect(() => {
+        gameStatus()
+    }, [status])
     const gameStatus = () => {
         if (status === "pending") return true;
 
@@ -147,7 +151,7 @@ const Hangman = () => {
             message.success("Level Complete\nKindly Go to the next Scene✅");
             if (currentScene.next_scene === -1) {
                 setStatus("finished")
-                
+
             }
         }
 
@@ -182,12 +186,16 @@ const Hangman = () => {
     };
 
     const wrongGuess = (val) => {
-        if (!gameStatus() || wrongGuessed.includes(val)) return;
+        if (!gameStatus() || wrongGuessed.includes(val) || wrongGuessed.length >= 6) 
+            return;
 
         setWrongGuessed(wg => [...wg, val]);
     };
 
     const handleKeyPress = (e) => {
+        if(!gameStatus())
+            return
+
         const val = e.key.toUpperCase();
         if (val === "ARROWLEFT") {
             navigate("/clue")
@@ -198,12 +206,13 @@ const Hangman = () => {
         }
         if (!val || val.length > 1) return;
 
-        console.log(val)
+
         if (!(val >= "A" && val <= "Z")) {
-            if (gameStatus()) message.warning("Invalid Input\nPlease enter only alphabets!!", 5);
+            if (gameStatus())
+                message.warning("Invalid Input! Please enter only alphabets!!", 5);
             return;
         }
-        if (word.includes(val)) {
+        else if (word.includes(val)) {
             correctGuess(val);
         } else {
             wrongGuess(val);
@@ -226,15 +235,17 @@ const Hangman = () => {
     }
 
     const handleNextScene = async () => {
-        console.log("NEXT SCENE : ", currentScene.next_scene)
-        console.log(status)
         if (currentScene.next_scene === -1) {
             setStatus("finished")
             return;
         }
-        await LevelComplete(currentScene.next_scene)
-        console.log("NAVIGATING TO SCENEPAGE")
-        navigate("/scenepage")
+        await LevelComplete(currentScene.next_scene).then(() => {
+            navigate("/scenepage")
+
+        }).catch(() => {
+            message.error("error occured")
+        })
+
     }
     return (
         <LoadingPage loading={loading || load}>

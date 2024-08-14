@@ -1,28 +1,25 @@
 import React from 'react'
-import { setGameState, setScene } from '../auth';
-import { _id, token } from '../config/userData';
+import { getLevel, setGameState, setScene } from '../../auth';
+import { _id, token } from '../../config/userData';
 import axios from 'axios';
-import { serverUrl } from '../config/serverUrl';
+import { serverUrl } from '../../config/serverUrl';
 import { message } from 'antd';
 
 const LevelComplete = async (nextScene) => {
         try {
-            console.log("Next scee : ", nextScene)
+            const level = getLevel()
             const res = await axios({
                 method: "GET",
-                url: `${serverUrl}/scenes/${nextScene}`,
+                url: `${serverUrl}/scenes/${nextScene}/${level}`,
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             });
 
-            console.log(res.data)
             setScene(res)
-            console.log("SCENE SET SUCCESSFULLY")
             
             const n = Number(res.data.scene.scene_word)
             const displayWord = Array(n).fill('_')
-            console.log(displayWord)
             setGameState(_id, nextScene, displayWord, [], -1)
             return
         } catch (error) {

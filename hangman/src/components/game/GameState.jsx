@@ -3,7 +3,7 @@ import GameWonOverlay from './GameWonOverlay';
 import GameLostOverlay from './GameLostOverlay';
 
 const GameState = ({children, gameState, navigate}) => {
-  console.log(gameState)
+  
     return (
         <div style={{ position: 'relative', width: '100%', height: '100%' }}>
           {gameState === "lost" && (
@@ -35,7 +35,7 @@ const GameState = ({children, gameState, navigate}) => {
               alignItems: 'center',
               zIndex: 10
             }}>
-              <GameWonOverlay onMenuClick={() => {navigate("/")}} onRestartClick={()  => {}}/>
+              <GameWonOverlay onMenuClick={() => {navigate("/")}} onRestartClick={()  => {navigate("/scenepage")}}/>
               </div>
           )}
           <div style={{ pointerEvents: (gameState == "pending" || gameState == "won") ?'all' : 'none'}}>
