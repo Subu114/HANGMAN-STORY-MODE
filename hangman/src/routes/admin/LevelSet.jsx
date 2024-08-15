@@ -57,6 +57,16 @@ const LevelSet = () => {
     return (
         <div className='scene-card'>
             <h1 style={{marginBottom : '10px', textAlign : 'center'}}> Create a Level</h1>
+            <div className="instructions">
+                <h2>Instructions</h2>
+                <div className="instructions-section">
+                    <h4>For Game Mechanics</h4>
+                    <ul>
+                        <li>If your current level is the last, make sure to give the next scene as -1.</li>
+                        <li>If your current level is not the last, then make sure to give the number of the next level in the field.</li>
+                    </ul>
+                </div>
+            </div>
             <form onSubmit={handleSubmit} className='scene-form'>
                 <label>Level Number:</label>
                 <input type='number' required name='level' onChange={handleChange} /> <br /><br />

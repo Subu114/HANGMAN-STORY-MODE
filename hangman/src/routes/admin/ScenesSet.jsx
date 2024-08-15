@@ -86,6 +86,28 @@ const ScenesSet = () => {
 
     return (
         <div className='scene-card'>
+            <h1 style={{ textAlign: 'center', marginBottom: '10px', textDecoration: 'underline' }}>Add Scene</h1>
+            <div className="instructions">
+                <h2>Instructions</h2>
+                <div className="instructions-section">
+                    <h4>For Server Purpose</h4>
+                    <ul>
+                        <li>Please fill the scene number and level first, then upload the image.</li>
+                        <li>For best results, make sure to upload images only when the previous one has been successfully uploaded.</li>
+                    </ul>
+                </div>
+                <div className="instructions-section">
+                    <h4>For Game Mechanics</h4>
+                    <ul>
+                        <li>If your current scene is the last, make sure to give the next scene field as -1.</li>
+                        <li>If your current scene is not the last, then make sure to give the number of the next scene in the field.</li>
+                        <li>If your current level is the last, make sure to give the next levle field as -1.</li>
+                        <li>If your current level is not the last, then make sure to give the number of the next level in the field.</li>
+
+                    </ul>
+                </div>
+            </div>
+
             <form onSubmit={handleSubmit} className='scene-form'>
                 <label>Level :</label>
                 <input type='number' required name='level' onChange={handleChange} /> <br /><br />

@@ -60,12 +60,12 @@ const LevelsDisplay = () => {
     const updateLevel = async (levelObject) => {
         try {
             await axios({
-                method : "POST",
-                url : `${serverUrl}/levels/update`,
+                method: "POST",
+                url: `${serverUrl}/levels/update`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
-                data : levelObject
+                data: levelObject
             });
             message.success(`Level ${levelObject.level} updated successfully`);
             fetchLevels();
@@ -82,7 +82,18 @@ const LevelsDisplay = () => {
 
     return (
         <div className="scenes-display">
-            <h1 style={{margin: "10px"}}>Levels</h1>
+            <h1 style={{ margin: "10px" }}>Levels</h1>
+            <div className="instructions">
+                <h2>Instructions</h2>
+
+                <div className="instructions-section">
+                    <h4>For Game Mechanics</h4>
+                    <ul>
+                        <li>If your current level is the last, make sure to give the next levle field as -1.</li>
+                        <li>If your current level is not the last, then make sure to give the number of the next level in the field.</li>
+                    </ul>
+                </div>
+            </div>
             <div className="search-container">
                 <input
                     type="number"
@@ -97,9 +108,9 @@ const LevelsDisplay = () => {
             {loading ? <div className="loading-message">Loading...</div> : (
                 <div className="scenes-list">
                     {filteredLevels.length > 0 ? (
-                        <p style={{margin : '10px'}}>Level Found: {filteredLevels.length}</p>
+                        <p style={{ margin: '10px' }}>Level Found: {filteredLevels.length}</p>
                     ) : (
-                        <p style={{margin : '10px'}}>No Levels found</p>
+                        <p style={{ margin: '10px' }}>No Levels found</p>
                     )}
                     {filteredLevels.map((ele, index) => (
                         <div key={index} className="scene-item">

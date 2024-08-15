@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import SceneDisplay from '../../components/SceneDisplay';
 import axios from 'axios';
 import { serverUrl } from '../../config/serverUrl';
-import { isAdmin } from '../../auth';
+import { getToken, isAdmin } from '../../auth';
 import { useNavigate } from 'react-router-dom';
-import { token } from '../../config/userData';
 import { message } from 'antd';
 import "./ScenesDisplay.css"
 
@@ -20,6 +19,7 @@ const ScenesDisplay = () => {
     const fetchScenes = async () => {
         try {
             setLoading(true);
+            const token = getToken()
             const response = await axios.get(`${serverUrl}/scenes/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -28,16 +28,19 @@ const ScenesDisplay = () => {
             setScenes(response.data.scenes);
         } catch (err) {
             setError(err);
+            console.log(err)
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
+
         if (!isAdmin()) {
             return navigate("/");
         }
-        fetchScenes();
+        fetchScenes()
+
     }, []);
 
     const deleteScene = async (sceneNumber) => {
@@ -59,12 +62,12 @@ const ScenesDisplay = () => {
     const updateScene = async (sceneObject) => {
         try {
             await axios({
-                method : "POST",
-                url : `${serverUrl}/scenes/update`,
+                method: "POST",
+                url: `${serverUrl}/scenes/update`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
-                data : sceneObject
+                data: sceneObject
             });
             message.success(`Level ${sceneObject.level} Scene ${sceneObject.scene_number} updated successfully`);
             fetchScenes();
@@ -81,8 +84,29 @@ const ScenesDisplay = () => {
     });
 
     return (
+
         <div className="scenes-display">
-            <h1 style={{margin: "10px"}}>Levels and Scenes</h1>
+            <h1 style={{ margin: "10px", textAlign: 'center' }}>Levels and Scenes</h1>
+            <div className="instructions">
+                <h2>Instructions</h2>
+                <div className="instructions-section">
+                    <h4>For Server Purpose</h4>
+                    <ul>
+                        <li>Please fill the scene number and level first, then upload the image.</li>
+                        <li>For best results, make sure to upload images only when the previous one has been successfully uploaded.</li>
+                    </ul>
+                </div>
+                <div className="instructions-section">
+                    <h4>For Game Mechanics</h4>
+                    <ul>
+                        <li>If your current scene is the last, make sure to give the next scene field as -1.</li>
+                        <li>If your current scene is not the last, then make sure to give the number of the next scene in the field.</li>
+                        <li>If your current level is the last, make sure to give the next levle field as -1.</li>
+                        <li>If your current level is not the last, then make sure to give the number of the next level in the field.</li>
+
+                    </ul>
+                </div>
+            </div>
             <div className="search-container">
                 <input
                     type="number"
@@ -103,9 +127,9 @@ const ScenesDisplay = () => {
             {loading ? <div className="loading-message">Loading...</div> : (
                 <div className="scenes-list">
                     {filteredScenes.length > 0 ? (
-                        <p style={{margin : '10px'}}>Scenes Found: {filteredScenes.length}</p>
+                        <p style={{ margin: '10px' }}>Scenes Found: {filteredScenes.length}</p>
                     ) : (
-                        <p style={{margin : '10px'}}>No scenes found</p>
+                        <p style={{ margin: '10px' }}>No scenes found</p>
                     )}
                     {filteredScenes.map((ele, index) => (
                         <div key={index} className="scene-item">
