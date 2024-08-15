@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { _id, token } from '../../config/userData';
 import { serverUrl } from '../../config/serverUrl';
-import LevelComplete from './LevelComplete';
 import useFetchWord from '../../hooks/useFetchWord';
 import LoadingPage from '../../components/LoadingPage';
 import { isAuth, userDataRemove } from '../../auth';
@@ -197,7 +196,10 @@ const Hangman = () => {
             return
 
         const val = e.key.toUpperCase();
-        if (val === "ARROWLEFT") {
+        if (val === "Escape") {
+            navigate("/user")
+          }
+        else if (val === "ARROWLEFT") {
             navigate("/clue")
         }
         else if (val === "ARROWRIGHT" || val === "ENTER") {
@@ -239,13 +241,8 @@ const Hangman = () => {
             setStatus("finished")
             return;
         }
-        await LevelComplete(currentScene.next_scene).then(() => {
-            navigate("/scenepage")
-
-        }).catch(() => {
-            message.error("error occured")
-        })
-
+        localStorage.setItem('next-scene', currentScene.next_scene)
+        return navigate("/postscene")
     }
     return (
         <LoadingPage loading={loading || load}>

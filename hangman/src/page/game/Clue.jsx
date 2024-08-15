@@ -15,7 +15,9 @@ const Clue = ({ }) => {
 
     const handleKeyPress = (e) => {
         const val = e.key;
-
+        if (val === "Escape") {
+            navigate("/user")
+        }
         if (val === "ArrowLeft"){
             navigate("/scenepage")
             

@@ -45,7 +45,7 @@ const User = () => {
               }
               else if(val){
                 setLoading(false)
-                navigate('/scenepage')
+                navigate('/prescene')
               }
               setLoading(false)
 

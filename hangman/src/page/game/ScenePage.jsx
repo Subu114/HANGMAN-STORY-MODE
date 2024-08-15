@@ -20,8 +20,11 @@ const ScenePage = () => {
     const handleKeyPress = (e) => {
         const val = e.key;
 
-        if (val === "ArrowLeft") {
-
+        if (val === "Escape") {
+            navigate("/user")
+        }
+        else if (val === "ArrowLeft") {
+            navigate("/prescene")
         }
         else if (val === "ArrowRight") {
             navigate("/clue")
@@ -36,7 +39,7 @@ const ScenePage = () => {
         }
         setTimeout(() => {
             setLoading(false)
-        }, 1500)
+        }, 1000)
     }, [])
 
     useEffect(() => {
@@ -56,7 +59,7 @@ const ScenePage = () => {
                 <div className='scene-text-container'>
                     <div className="scene-content">
                         <div className='back-scene-button'>
-                            <button>
+                            <button onClick={() => { navigate("/prescene") }}>
                                 <img src={backButtonImage} alt="Back" />
                             </button>
                         </div>
