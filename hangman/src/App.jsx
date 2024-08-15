@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
+
 import ScenePage from './page/game/ScenePage';
 import Home from './Home';
 import Clue from './page/game/Clue';

@@ -22,7 +22,7 @@ const game =async () => {
             });
             
             setScene(res);
-            console.log(res);
+            console.log(res.data.scene);
             setLevel(level_id)
             const n = Number(res.data.scene.scene_word);
             const displayWord = Array(n).fill('_');

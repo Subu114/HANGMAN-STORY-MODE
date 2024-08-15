@@ -14,7 +14,6 @@ const Home = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      console.log(window.scrollY)
       // Check if the user is at the top of the page
       if (window.scrollY === 0 || e.clientY < 50) {
         setNavbarVisible(true); // Show navbar
