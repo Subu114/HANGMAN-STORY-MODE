@@ -145,14 +145,13 @@ const Hangman = () => {
         if (status === "pending") return true;
 
         if (status === "lost") {
-            message.warning("Game Over\nKindly Restart the game and Try Again😇");
+           //User has lost! Restart the game
         }
 
         if (status === "won") {
-            message.success("Level Complete\nKindly Go to the next Scene✅");
+            //Check if the scene is last
             if (currentScene.next_scene === -1) {
                 setStatus("finished")
-
             }
         }
 
@@ -232,7 +231,7 @@ const Hangman = () => {
 
     if (error) {
         message.error("Error occured!")
-        setTimeout(() => { navigate("/user") }, 5000)
+        setTimeout(() => { navigate("/user") }, 2000)
         return (
             <div></div>
         )
