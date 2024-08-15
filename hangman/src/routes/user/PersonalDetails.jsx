@@ -4,11 +4,10 @@ import "./User.css"
 
 import { userFolder } from '../../config/serverFolders';
 import { downloadImgUrl, uploadImage } from '../../config/handleImages';
-import { setUserData as setToLocal } from '../../auth';
+import { getToken, setUserData as setToLocal } from '../../auth';
 import axios from 'axios';
 import { serverUrl } from '../../config/serverUrl';
 import { message } from 'antd';
-import { token } from '../../config/userData';
 
 const PersonalDetails = () => {
     const [clicked, setClicked] = useState(false)
@@ -32,6 +31,8 @@ const PersonalDetails = () => {
 
         try {
             message.info("Uploading img")
+            const token = getToken()
+
             await uploadImage(val, userFolder, `${userData._id}`)
             const url = await downloadImgUrl(userFolder, `${userData._id}`)
             const res = await axios({

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ScenePage.css';
 import nextButtonImage from '../../assets/button_next.png';
-import backButtonImage from '../../assets/button_back.png';
 import { useNavigate } from 'react-router-dom';
 
 import UseCurrentScene from '../../hooks/UseCurrentScene';

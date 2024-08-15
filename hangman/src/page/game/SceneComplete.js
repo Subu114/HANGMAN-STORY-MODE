@@ -1,5 +1,5 @@
-import { getLevel, setGameState, setScene } from '../../auth';
-import { _id, token } from '../../config/userData';
+import { getLevel, getToken, getUserId, setGameState, setScene } from '../../auth';
+
 import axios from 'axios';
 import { serverUrl } from '../../config/serverUrl';
 import { message } from 'antd';
@@ -8,6 +8,8 @@ import { message } from 'antd';
 const SceneComplete = async (nextScene) => {
     try {
         const level = getLevel()
+        const token = getToken()
+        const _id = getUserId()
         const res = await axios({
             method: "GET",
             url: `${serverUrl}/scenes/${nextScene}/${level}`,

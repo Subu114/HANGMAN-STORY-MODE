@@ -9,6 +9,17 @@ const userAuthenticated = (response) => {
     return true
 }
 
+
+const getToken = () => {
+    return localStorage.getItem("token")
+}
+
+const getUserId = () => {
+    const val = JSON.parse(localStorage.getItem("user"));
+    return val ? val._id : null;
+
+}
+
 const setUserData = (val) => {
     localStorage.setItem("user", JSON.stringify(val))
 }
@@ -105,5 +116,7 @@ export {
     setUserData, 
     restartGame,
     setLevel,
-    getLevel
+    getLevel,
+    getToken,
+    getUserId
 }

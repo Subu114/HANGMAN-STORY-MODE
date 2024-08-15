@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import "./User.css"
-import { userDataRemove } from '../../auth'
+import { getToken, userDataRemove } from '../../auth'
 import { message } from 'antd';
 import axios from 'axios';
 import { serverUrl } from '../../config/serverUrl';
-import { token } from '../../config/userData';
 const StatBox = ({ navigate }) => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         async function getStats() {
             try {
+                const token = getToken()
+
                 const res = await axios({
                     method: "GET",
                     url: `${serverUrl}/users/stats`,
@@ -37,7 +38,7 @@ const StatBox = ({ navigate }) => {
 
         getStats()
 
-    }, [token, serverUrl])
+    }, [])
 
     const getChapterText = (val) => {
         switch (val) {

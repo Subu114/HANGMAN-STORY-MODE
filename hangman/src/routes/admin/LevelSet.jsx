@@ -2,9 +2,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { serverUrl } from "../../config/serverUrl"
 import "../../components/SceneDisplay.css"
-import { isAdmin } from '../../auth';
+import { getToken, isAdmin } from '../../auth';
 import { useNavigate } from 'react-router-dom';
-import { token } from '../../config/userData';
 import { message } from 'antd';
 const LevelSet = () => {
     const navigate = useNavigate();
@@ -34,7 +33,7 @@ const LevelSet = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            console.log(level)
+            const token = getToken()
             const res = await axios({
                 method : "POST",
                 url : `${serverUrl}/levels/create`,
@@ -48,12 +47,12 @@ const LevelSet = () => {
             message.error(error.response ? error.response.data.message : error.essage)
         }
     }
-
+    
     const handleViewData = (e) => {
         e.preventDefault()
         console.log("Scene Object:", level)
     }
-
+    
     return (
         <div className='scene-card'>
             <h1 style={{marginBottom : '10px', textAlign : 'center'}}> Create a Level</h1>

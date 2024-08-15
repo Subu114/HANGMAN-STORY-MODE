@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import SceneDisplay from '../../components/SceneDisplay';
 import axios from 'axios';
 import { serverUrl } from '../../config/serverUrl';
-import { isAdmin } from '../../auth';
+import { getToken, isAdmin } from '../../auth';
 import { useNavigate } from 'react-router-dom';
-import { token } from '../../config/userData';
 import { message } from 'antd';
 import "./ScenesDisplay.css"
 import LevelDisplay from '../../components/LevelDisplay';
@@ -20,6 +19,7 @@ const LevelsDisplay = () => {
 
     const fetchLevels = async () => {
         try {
+            const token = getToken();
             setLoading(true);
             const response = await axios.get(`${serverUrl}/levels/`, {
                 headers: {
@@ -43,7 +43,8 @@ const LevelsDisplay = () => {
 
     const deleteLevel = async (levelNumber) => {
         try {
-            console.log(levelNumber);
+            const token = getToken()
+            
             await axios.delete(`${serverUrl}/levels/delete/${levelNumber}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -56,9 +57,10 @@ const LevelsDisplay = () => {
             message.error("Error while deleting Level");
         }
     };
-
+    
     const updateLevel = async (levelObject) => {
         try {
+            const token = getToken()
             await axios({
                 method: "POST",
                 url: `${serverUrl}/levels/update`,

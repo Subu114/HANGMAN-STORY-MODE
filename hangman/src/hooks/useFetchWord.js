@@ -1,9 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { sceneWordKey } from '../config/sceneWordKey';
-import { token } from '../config/userData';
 import { serverUrl } from '../config/serverUrl';
-import { getLevel } from '../auth';
+import { getLevel, getToken } from '../auth';
 
 
 const useFetchWord = (sceneNumber) => {
@@ -15,6 +14,8 @@ const useFetchWord = (sceneNumber) => {
         const fetchData = async () => {
             try {
                 setLoading(true)
+                const token = getToken()
+
                 const level = getLevel()
                 const response = await axios({
                     method: "POST",

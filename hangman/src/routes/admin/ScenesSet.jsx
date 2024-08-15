@@ -4,9 +4,8 @@ import { serverUrl } from "../../config/serverUrl";
 import "../../components/SceneDisplay.css";
 import { downloadImgUrl, uploadImage } from '../../config/handleImages';
 import { sceneFolder } from '../../config/serverFolders';
-import { isAdmin } from '../../auth';
+import { getToken, isAdmin } from '../../auth';
 import { useNavigate } from 'react-router-dom';
-import { token } from '../../config/userData';
 import { message } from 'antd';
 
 const ScenesSet = () => {
@@ -61,6 +60,8 @@ const ScenesSet = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const token = getToken()
+
             if (scene.scene_img === "") {
                 console.log("Image URL not set");
                 return;

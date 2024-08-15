@@ -33,19 +33,19 @@ const ScenesDisplay = () => {
             setLoading(false);
         }
     };
-
+    
     useEffect(() => {
-
+        
         if (!isAdmin()) {
             return navigate("/");
         }
         fetchScenes()
-
+        
     }, []);
-
+    
     const deleteScene = async (sceneNumber) => {
         try {
-            console.log(sceneNumber);
+            const token = getToken()
             await axios.delete(`${serverUrl}/scenes/delete/${sceneNumber}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -61,6 +61,8 @@ const ScenesDisplay = () => {
 
     const updateScene = async (sceneObject) => {
         try {
+            const token = getToken()
+
             await axios({ 
                 method: "POST",
                 url: `${serverUrl}/scenes/update`,

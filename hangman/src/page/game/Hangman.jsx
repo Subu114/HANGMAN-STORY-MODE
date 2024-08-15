@@ -5,11 +5,10 @@ import "./Hangman.css";
 import HangmanImage from '../../data/HangmanImg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { _id, token } from '../../config/userData';
 import { serverUrl } from '../../config/serverUrl';
 import useFetchWord from '../../hooks/useFetchWord';
 import LoadingPage from '../../components/LoadingPage';
-import { isAuth, userDataRemove } from '../../auth';
+import { getToken, getUserId, isAuth, userDataRemove } from '../../auth';
 import GameState from '../../components/game/GameState';
 
 const Hangman = () => {
@@ -32,6 +31,7 @@ const Hangman = () => {
         const controller = new AbortController();
         const { signal } = controller;
         try {
+            const token = getToken()
             const res = await axios({
                 method: "GET",
                 url: `${serverUrl}/users/game-state`,
@@ -83,6 +83,8 @@ const Hangman = () => {
         const controller = new AbortController();
         const { signal } = controller;
         try {
+            const _id = getUserId()
+            const token = getToken()
             await axios({
                 method: "POST",
                 url: `${serverUrl}/users/game-state/create`,
