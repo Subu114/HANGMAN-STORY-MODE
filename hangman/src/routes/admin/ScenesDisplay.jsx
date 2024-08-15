@@ -61,7 +61,7 @@ const ScenesDisplay = () => {
 
     const updateScene = async (sceneObject) => {
         try {
-            await axios({
+            await axios({ 
                 method: "POST",
                 url: `${serverUrl}/scenes/update`,
                 headers: {

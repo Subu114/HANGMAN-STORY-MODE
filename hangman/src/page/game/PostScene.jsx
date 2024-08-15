@@ -7,7 +7,7 @@ import UseCurrentScene from '../../hooks/UseCurrentScene';
 import { isAuth } from '../../auth';
 import LoadingPage from '../../components/LoadingPage';
 import { message } from 'antd';
-import LevelComplete from './LevelComplete';
+import SceneComplete from './SceneComplete';
 
 const PostScene = () => {
   const currentScene = UseCurrentScene();
@@ -48,7 +48,7 @@ const PostScene = () => {
 
   const handleNext = async () => {
     const nextScene = Number(localStorage.getItem('next-scene'))
-    if (await LevelComplete(nextScene)) {
+    if (await SceneComplete(nextScene)) {
       localStorage.removeItem('next-scene')
       return navigate("/prescene")
     }

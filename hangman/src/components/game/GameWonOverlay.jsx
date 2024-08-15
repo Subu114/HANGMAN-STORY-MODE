@@ -5,7 +5,7 @@ import { message } from 'antd'
 import axios from 'axios'
 import { serverUrl } from '../../config/serverUrl'
 import { setLevel, setScene } from '../../auth'
-import LevelComplete from '../../page/game/LevelComplete'
+import SceneComplete from '../../page/game/SceneComplete'
 
 
 const GameWonOverlay = ({ onMenuClick, onRestartClick }) => {
@@ -26,7 +26,7 @@ const GameWonOverlay = ({ onMenuClick, onRestartClick }) => {
         return
       }
       setLevel(data.next_level)
-      await LevelComplete(1).then(onRestartClick).catch((e) => {
+      await SceneComplete(1).then(onRestartClick).catch((e) => {
         throw e
       })
     } catch (error) {
