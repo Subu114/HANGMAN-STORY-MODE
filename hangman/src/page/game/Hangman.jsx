@@ -131,7 +131,10 @@ const Hangman = () => {
 
     useEffect(() => {
         if (wrongGuessed?.length >= 6 && displayWord.length > 1) {
-            setStatus(() => 'lost');
+            setTimeout(() => {
+                setStatus(() => 'lost');
+            }, 2500)
+            setHangmanImg(HangmanImage[wrongGuessed.length]);
         }
         else if (wrongGuessed.length >= 0) {
             setHangmanImg(HangmanImage[wrongGuessed.length]);
@@ -186,7 +189,7 @@ const Hangman = () => {
     };
 
     const wrongGuess = (val) => {
-        if (!gameStatus() || wrongGuessed.includes(val) || wrongGuessed.length >= 6) 
+        if (!gameStatus() || wrongGuessed.includes(val) || wrongGuessed.length > 6) 
             return;
 
         setWrongGuessed(wg => [...wg, val]);
