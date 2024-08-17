@@ -36,6 +36,7 @@ hr {
 .header {
     font-family: Cinzel;
     font-size: 1.5vw;
+    white-space: nowrap;
 }
 
 .desc {
@@ -51,6 +52,10 @@ hr {
     margin-bottom: 2%;
     margin-top: 2%;
 }
-.not-active{
+.not-active {
     margin-left: 10%;
+    width: 100%;             
+    white-space: nowrap;    
+    overflow: hidden;       
+    text-overflow: ellipsis; 
 }

@@ -1,17 +1,45 @@
 const { isAdmin } = require("../authenticate/isAdmin");
 const Level = require("../models/level");
+const UserGameState = require("../models/userGameState");
 
 
 exports.getAllLevels = async (req, res) => {
     try {
-        const levels = await Level.find({}).sort({ scene_number: 1 })
+        const { _id } = req.query;
+        const allLevels = await Level.find({}).sort({ level: 1 });
+        const userGame = await UserGameState.findOne({user_id : _id});
+        let levels;
 
-        res.status(200).json({ levels })
+        if (!_id || !userGame) {
+            levels = allLevels.map((level, index) => {
+                if (index === 0) {
+                    return level;
+                }
+                return {
+                    ...level.toObject(),
+                    description: 'Conquer past trials to unlock the way',
+                };
+            });
+        } else {
+
+            levels = allLevels.map((level, index) => {
+                if (index === 0 || (level.level <= userGame.level)) {
+                    console.log("Returning this level : ", level)
+                    return level;
+                }
+                return {
+                    ...level.toObject(),
+                    description: 'Conquer past trials to unlock the way',
+                };
+            });
+        }
+        res.status(200).json({ levels });
     } catch (error) {
-        console.log("Error while fetching levels : ", error);
+        console.error("Error while fetching levels: ", error);
         res.status(500).json({ message: "Could not fetch levels! Please try again later..." });
     }
-}
+};
+
 
 exports.getLevel = async (req, res) => {
     try {
