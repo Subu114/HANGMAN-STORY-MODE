@@ -5,8 +5,7 @@ import content from './info';
 import { message } from 'antd';
 import axios from 'axios';
 import { serverUrl } from './config/serverUrl';
-import { token } from './config/userData';
-import { isAuth, userDataRemove } from './auth';
+import { getToken, isAuth, userDataRemove } from './auth';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -49,6 +48,7 @@ const Home = () => {
       return;
     }
     try {
+      const token = getToken();
       const res = await axios({
         method: "POST",
         url: `${serverUrl}/users/auth`,

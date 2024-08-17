@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { serverUrl } from '../../config/serverUrl';
-import { setGameState, setLevel, setScene, userDataRemove } from '../../auth';
+import { getToken, getUserId, setGameState, setLevel, setScene, userDataRemove } from '../../auth';
 import { message } from 'antd';
-import { _id, token } from '../../config/userData';
 
 const game =async () => {
 
     const fetchScene = async () => {
         try {
             
-            const user_id = _id;
+            const user_id = getUserId();
+            const token = getToken()
             const scene_id = 1;
             const level_id = 1;
 

@@ -1,7 +1,8 @@
 import axios from "axios"
 import { serverUrl } from "../config/serverUrl"
-import { token } from "../config/userData"
+
 import { message } from "antd"
+
 
 const userAuthenticated = (response) => {
     localStorage.setItem("user", JSON.stringify(response.data.user))
@@ -72,7 +73,7 @@ const getScene = () => {
 const setGameState = async (user_id, scene_id, display_word, wrong_guessed, hint) => {
     try {
         const level = getLevel()
-        console.log(level)
+        const token = getToken()
         display_word = display_word.join(' ')
         wrong_guessed = wrong_guessed.join(' ') ? wrong_guessed.join(' ') : ""
         const res = await axios({
@@ -91,6 +92,7 @@ const setGameState = async (user_id, scene_id, display_word, wrong_guessed, hint
 
 const restartGame = async() => {
     try {
+        const token = getToken()
         const res = await axios({
             method : "DELETE",
             url : `${serverUrl}/users/game-state/delete`,
