@@ -4,11 +4,11 @@
     padding: 10px 20px;
     border: none;
     border-radius: 25px;
-    font-size: 16px;
+    font-size: 1.6rem;
     cursor: pointer;
     font-weight: bolder;
     position: relative;
-
+    width: 70%;
 }
 
 .gradient-button:hover {

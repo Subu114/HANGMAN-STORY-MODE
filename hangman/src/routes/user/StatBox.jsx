@@ -10,6 +10,14 @@ const StatBox = ({ navigate }) => {
     useEffect(() => {
         async function getStats() {
             try {
+                const val = JSON.parse(localStorage.getItem('user'));
+
+                // Merging stats and val into userData state
+                setUserData(prevData => ({
+                    ...prevData,
+                    username: val.username,
+                    email: val.email,
+                }));
                 const token = getToken()
 
                 const res = await axios({
@@ -20,14 +28,12 @@ const StatBox = ({ navigate }) => {
                     }
                 })
                 const stats = res.data.stats;
-                const val = JSON.parse(localStorage.getItem('user'));
 
                 // Merging stats and val into userData state
                 setUserData(prevData => ({
                     ...prevData,
                     ...stats,
-                    username: val.username,
-                    email: val.email,
+
                 }));
             } catch (error) {
                 if (error?.response?.status === 404) {
@@ -73,13 +79,13 @@ const StatBox = ({ navigate }) => {
                     <hr />
                     <div className='attr-val-box'>
                         <div className='attributes'>
-                            <h4>LEVEL</h4>
-                            <h4>SCENE</h4>
-                            <h4>ACHIECEMENTS</h4>
+                            <h4>LEVEL</h4><br/>
+                            <h4>SCENE</h4><br/>
+                            <h4>ACHIECEMENTS</h4><br/>
                         </div>
                         <div className='values'>
-                            <p>{getChapterText(userData?.chapter)}  </p>
-                            <p>{userData?.scene ? userData?.scene : 'none'}</p>
+                            <p>{getChapterText(userData?.chapter)}  </p><br/>
+                            <p>{userData?.scene ? userData?.scene : 'none'}</p><br/>
                             <p>{userData?.achievements ? userData.achievements : 'none'}</p>
 
                         </div>

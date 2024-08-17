@@ -7,7 +7,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* color: white; */
 }
 .main-container {
     color: white;
@@ -120,8 +119,8 @@
 }
 
 .stats-box{
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 80%;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 70%;
     height: 70%;
     display: flex;
     flex-direction: column;
@@ -145,6 +144,13 @@
     align-items: center;
     justify-content: space-between;
 }
+.username {
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
 .account p, .username p, .values p{
     font-style: italic;
     font-weight: 100;
@@ -156,24 +162,27 @@
 .current-level{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     /* align-items: center; */
 }
-.current-level hr{
+.current-level hr, .account p{
     width: 100%;
+    margin: 4% 0;
 }
 .attr-val-box{
     display: flex;
     flex-direction: row;
     font-size: 12px;
+    padding: 10px;
+
 }
 
 .attributes {
-    margin-right: 5%;
     text-align: center;
     font-size: 0.8rem;
 }
 .values {
-    margin-left: 5%;
     text-align: center;
 }
 
@@ -186,11 +195,12 @@
     width: 20%;
     margin: 0 2% 2% 0;
     align-self: flex-end;
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: white;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight:bold;
     border: 3px solid #FF0000;
+    
 }
 .stats-box button:hover{
     cursor: pointer;
@@ -199,4 +209,10 @@
 
 h2{
     text-transform: uppercase;
+}
+.stats-box h3{
+    font-size: 1rem;
+}
+.stats-box p{
+    color: rgba(255, 255, 255, 0.664);
 }
