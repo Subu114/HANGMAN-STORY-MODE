@@ -22,7 +22,7 @@ Welcome to the **Hangman Story Mode Game**, a unique take on the classic hangman
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/hangman-story-mode.git
+    git clone https://github.com/Subu114/HANGMAN-STORY-MODE.git
     ```
 2. **Navigate to the project directory**:
     ```bash
