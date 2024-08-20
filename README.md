@@ -116,33 +116,66 @@ Welcome to the **Hangman Story Mode Game**, a unique take on the classic hangman
 7. **Next Scene Page**: If there are more scenes, you’ll be directed to the next scene.
 8. **Next Level Page**: If the current scene ends, you’ll move on to the next level.
 
-## Screenshots
 
-Below are the pages included in the game:
+## Screenshots
 
 ### User Pages
 1. **Home**
-2. **Sign In**
-3. **Register**
-4. **Levels** (can be viewed from Home by clicking Levels in the top nav bar)
-5. **User Portal (Menu)**
-6. **Pre Scene Story**
-7. **Scene Story**
-8. **Clue**
-9. **Main Game Page** (where the hangman is located)
-10. **Win/Lose Page**
-11. **Next Scene Page**
-12. **Next Level Page**
+   
+   ![Home](images/Home.jpeg)
+3. **Sign In**
+
+   ![Sign In](images/SignIn.jpeg)
+4. **Register**
+
+   ![Register](images/Register.jpeg)
+5. **Levels**
+
+   ![Levels](images/Levels.jpeg)
+6. **User Portal (Menu)**
+
+   ![User Portal](images/User_Portal.jpeg)
+7. **Pre-Scene Story**
+
+   ![Pre-Scene Story](images/Pre_Scene_Story.jpeg)
+8. **Scene Story**
+
+   ![Scene Story](images/Scene_Story.jpeg)
+9. **Clue**
+
+   ![Clue](images/Clue.jpeg)
+10. **Main Game Page**
+
+   ![Main Game Page](images/Main_Game_page1.jpeg)
+   ![Main Game Page - 2](images/Main_Game_page2.jpeg)
+
+11. **Lost Page**
+
+    ![Lost Page](images/Lost_Page.jpeg)
+12. **Won Page**
+
+    ![Won Page](images/Won_Page.jpeg)
 
 ### Admin Pages
-1. **Main Page**: Manage levels, scenes, and add game assets.
-2. **Manage Levels**:
-    - Create level
-    - Edit/Delete level
-3. **Manage Scenes**:
-    - Create scene
-    - Edit/Delete scene
-4. **Game Asset Image Upload**: Upload images for game assets like the Home Page, login portal background, etc.
+1. **Admin Main Page**
+   ![Admin Page](images/Admin_Page.jpeg)
+
+2. **Manage Levels**
+   - **Show Levels**: ![Admin Show Levels](images/Admin_Show_Levels.jpeg)
+
+   - **Create Level**: ![Admin Create Level](images/Admin_Create_Level.jpeg)
+
+   - **Manage Levels**: ![Admin Manage Levels](images/Admin_Manage_Levels.jpeg)
+
+3. **Manage Scenes**
+   - **Show Scenes**: ![Admin Show Scenes](images/Admin_Show_Scenes.jpeg)
+
+   - **Add Scene**: ![Admin Add Scene](images/Admin_Add_Scene.jpeg)
+
+4. **Game Assets**
+
+   ![Admin Game Assets](images/Admin_Game_Assets.jpeg)
+
 
 ## Technologies Used
 
