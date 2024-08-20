@@ -20,7 +20,7 @@ const LoadingPage = ({children, loading}) => {
               <CircleLoader color="#ffffff" />
             </div>
           )}
-          <div style={{ pointerEvents: loading ? 'none' : 'auto' }}>
+          <div style={{ pointerEvents: loading ? 'none' : 'all' }}>
             {children}
           </div>
         </div>
