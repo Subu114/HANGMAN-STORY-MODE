@@ -1,8 +1,10 @@
-
 const UseCurrentScene = () => {
     const currentScene = localStorage.getItem('current-scene');
-    // console.log("Scene Returned : ", currentScene)
-    return JSON.parse(currentScene)
+
+    if (currentScene && currentScene !== "undefined") {
+        return JSON.parse(currentScene);
+    }
+    return null;
 }
 
-export default UseCurrentScene
+export default UseCurrentScene;
