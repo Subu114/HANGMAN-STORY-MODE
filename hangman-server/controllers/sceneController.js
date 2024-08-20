@@ -9,7 +9,10 @@ exports.getAllScenes = async (req, res) => {
             return res.status(403).json({ message: "UNAUTHORISED ACCESS" })
         }
         const scenes = await Scene.find({}).sort({ scene_number: 1 })
-
+        if(scenes.lenth === 0)
+        {
+            return res.send(404).json({message : "No Scenes Found"})
+        }
         res.status(200).json({ scenes })
     } catch (error) {
         console.log("Error while fetching Scenes : ", error);
@@ -29,8 +32,7 @@ exports.getScene = async (req, res) => {
         }
         const scene = await Scene.findOne({ scene_number: sceneNumber, level })
         if (!scene) {
-            console.log("The game is completed")
-            return res.status(200).json({ message: "not found scenes re baba" })
+            return res.status(404).json({ message: "No Scene found" })
         }
         if ((await isAdmin(req.user.id))) {
             return res.status(200).json({ scene })
