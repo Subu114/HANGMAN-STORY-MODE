@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SceneDisplay from '../../components/SceneDisplay';
 import axios from 'axios';
 import { serverUrl } from '../../config/serverUrl';
-import { getToken, isAdmin } from '../../auth';
+import { getToken, getUserId, isAdmin } from '../../auth';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import "./ScenesDisplay.css"
@@ -21,10 +21,12 @@ const LevelsDisplay = () => {
         try {
             const token = getToken();
             setLoading(true);
+            
             const response = await axios.get(`${serverUrl}/levels/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
-                }
+                },
+                params : {_id : getUserId() ? getUserId() : null }
             });
             setLevels(response.data.levels);
         } catch (err) {

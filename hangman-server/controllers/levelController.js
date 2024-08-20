@@ -1,14 +1,25 @@
 const { isAdmin } = require("../authenticate/isAdmin");
 const Level = require("../models/level");
+const User = require("../models/user");
 const UserGameState = require("../models/userGameState");
 
 
 exports.getAllLevels = async (req, res) => {
     try {
         const { _id } = req.query;
+        console.log(_id)
         const allLevels = await Level.find({}).sort({ level: 1 });
-        const userGame = await UserGameState.findOne({user_id : _id});
+
+        if (_id) {
+            const user = await User.findById(_id)
+            console.log(user)
+            if (user.role === 'admin')
+                return res.status(200).json({ levels: allLevels })
+        }
+        
+        const userGame = await UserGameState.findOne({ user_id: _id });
         let levels;
+
 
         if (!_id || !userGame) {
             levels = allLevels.map((level, index) => {
