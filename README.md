@@ -42,7 +42,8 @@ Welcome to the **Hangman Story Mode Game**, a unique take on the classic hangman
     JWT_SECRET = YOUR_JWT_SECRET_KEY
     SCENE_WORD_KEY = YOUR_SCENE_WORD_KEY(should be same)
     ```
-  For Frontend:
+    
+   For Frontend:
     ```env
     VITE_SERVER_URL = BACKEND_SERVER_URL
     VITE_SCENE_WORD_KEY = YOUR_SCENE_WORD_KEY(should be same)
@@ -64,6 +65,8 @@ Welcome to the **Hangman Story Mode Game**, a unique take on the classic hangman
 3. **Access the game**:
     Open your browser and navigate to `http://localhost:3000` (The hosted port can be different so check in the terminal for the port).
 
+## Admin Guide
+
 ### Initial Setup for Admin
 
 1. **Register a new user** in the application.
@@ -82,6 +85,36 @@ Welcome to the **Hangman Story Mode Game**, a unique take on the classic hangman
     - Create, edit, and delete scenes.
 - **Upload Game Assets**:
     - Upload images such as home page backgrounds and login portal backgrounds via the Game Img Upload button.
+
+## User Guide
+
+### Registration and Sign-In
+
+1. **Register a new user**:
+    - Navigate to the Register page.
+    - Fill in the required details (note: the username must be unique).
+    - Submit the registration form.
+
+2. **Sign in with your credentials**:
+    - Navigate to the Sign In page.
+    - Enter your username and password.
+    - Click Sign In to access the user portal.
+
+### User Portal
+
+- **View Stats**: On the user portal, you can view your game statistics.
+- **Change Profile Picture**: Update your profile picture by clicking on the profile section.
+
+### Playing the Game
+
+1. **Click "Continue"** on the user portal to start the game.
+2. **Pre-Scene Story**: The first screen will show the pre-scene story, setting the stage for the game.
+3. **Scene Story**: Next, you’ll see the scene story, providing more context.
+4. **Clue**: A clue will be presented to help you guess the word in the hangman game.
+5. **Hangman Game**: Play the classic hangman game, guessing letters to complete the word.
+6. **Win/Lose Page**: After the game, you’ll see a screen indicating whether you won or lost.
+7. **Next Scene Page**: If there are more scenes, you’ll be directed to the next scene.
+8. **Next Level Page**: If the current scene ends, you’ll move on to the next level.
 
 ## Screenshots
 
