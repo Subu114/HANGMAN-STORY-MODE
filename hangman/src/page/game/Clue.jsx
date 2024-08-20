@@ -5,11 +5,12 @@ import nextBtn from "../../assets/clue_next_btn.png"
 import UseCurrentScene from '../../hooks/UseCurrentScene'
 import { useNavigate } from 'react-router-dom'
 import { isAuth } from '../../auth'
+import { message } from 'antd'
 const Clue = ({ }) => {
     const currentScene = UseCurrentScene()
-    const sceneNumber = `Scene ${currentScene.scene_number}`
-    const clue = currentScene.scene_clue
-    const bgImage = currentScene.scene_img
+    const sceneNumber = `Scene ${currentScene?.scene_number}`
+    const clue = currentScene?.scene_clue
+    const bgImage = currentScene?.scene_img
     const navigate = useNavigate();
     const [press, setp] = useState(true)
 
@@ -32,6 +33,10 @@ const Clue = ({ }) => {
     useEffect(() => {
         if (!isAuth())
             navigate("/")
+        if (!currentScene) {
+            message.error("No Scene Found!")
+            return navigate("/user")
+        }
     }, [])
     const handleNext = () => {
         navigate("/hangman")

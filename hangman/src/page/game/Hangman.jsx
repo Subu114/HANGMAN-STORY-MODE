@@ -14,7 +14,7 @@ import GameState from '../../components/game/GameState';
 const Hangman = () => {
     const navigate = useNavigate();
     const currentScene = UseCurrentScene();
-    const { data: word, loading, error } = useFetchWord(currentScene.scene_number);
+    const { data: word, loading, error } = useFetchWord(currentScene?.scene_number);
     const [hint, setHint] = useState();
     const [status, setStatus] = useState('pending');
     const [displayWord, setDisplayWord] = useState([]);
@@ -23,7 +23,7 @@ const Hangman = () => {
     const [load, setLoad] = useState(true);
 
 
-    const bgImage = currentScene.scene_img;
+    const bgImage = currentScene?.scene_img;
     const branch = HangmanImage[10];
 
     const fetchData = async () => {
@@ -74,6 +74,10 @@ const Hangman = () => {
             message.error("User not authenticated!", 5)
             return navigate("/")
         }
+        if (!currentScene) {
+            message.error("No Scene Found!")
+            return navigate("/user")
+        }
         (async () => {
             await fetchData();
         })()
@@ -93,7 +97,7 @@ const Hangman = () => {
                 },
                 data: {
                     user_id: _id,
-                    scene_id: currentScene.scene_number,
+                    scene_id: currentScene?.scene_number,
                     hint: hint,
                     display_word: displayWord.join(' '),
                     wrong_guessed: wrongGuessed.join(' ').trim()
@@ -153,7 +157,7 @@ const Hangman = () => {
 
         if (status === "won") {
             //Check if the scene is last
-            if (currentScene.next_scene === -1) {
+            if (currentScene?.next_scene === -1) {
                 setStatus("finished")
             }
         }
@@ -241,11 +245,11 @@ const Hangman = () => {
     }
 
     const handleNextScene = async () => {
-        if (currentScene.next_scene === -1) {
+        if (currentScene?.next_scene === -1) {
             setStatus("finished")
             return;
         }
-        localStorage.setItem('next-scene', currentScene.next_scene)
+        localStorage.setItem('next-scene', currentScene?.next_scene)
         return navigate("/postscene")
     }
     return (
@@ -258,7 +262,7 @@ const Hangman = () => {
                         <Button onClick={getHint}>Hint {hint}</Button>
                     </div>
                     <div className='scene-number'>
-                        Scene {currentScene.scene_number}
+                        Scene {currentScene?.scene_number}
                     </div>
                     <button className='menu-button' onClick={() => navigate("/user")}>
                         MENU

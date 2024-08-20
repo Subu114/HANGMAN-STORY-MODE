@@ -11,9 +11,9 @@ import SceneComplete from './SceneComplete';
 
 const PostScene = () => {
   const currentScene = UseCurrentScene();
-  const sceneNumber = `Scene ${currentScene.scene_number}`;
-  const sceneStory = currentScene.post_progression;
-  const bgImage = currentScene.post_progression_img;
+  const sceneNumber = `Scene ${currentScene?.scene_number}`;
+  const sceneStory = currentScene?.post_progression;
+  const bgImage = currentScene?.post_progression_img;
   const navigate = useNavigate();
   let [loading, setLoading] = useState(true);
   const [press, setp] = useState(true)
@@ -30,9 +30,13 @@ const PostScene = () => {
     setp(p => !p)
   };
   useEffect(() => {
-    if (!isAuth() || !(localStorage.getItem('next-scene'))) {
+    if (!isAuth()) {
       return navigate("/")
 
+    }
+    if (!currentScene) {
+      message.error("No Scene Found!")
+      return navigate("/user")
     }
     setTimeout(() => {
       setLoading(false)

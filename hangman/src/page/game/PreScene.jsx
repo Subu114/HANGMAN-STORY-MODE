@@ -6,20 +6,22 @@ import { useNavigate } from 'react-router-dom';
 import UseCurrentScene from '../../hooks/UseCurrentScene';
 import { isAuth } from '../../auth';
 import LoadingPage from '../../components/LoadingPage';
+import { message } from 'antd';
 
 const PreScene = () => {
-    const currentScene = UseCurrentScene();
-    const sceneNumber = `Scene ${currentScene.scene_number}`;
-    const sceneStory = currentScene.pre_progression;
-    const bgImage = currentScene.pre_progression_img;
     const navigate = useNavigate();
+    const currentScene = UseCurrentScene()
+
+    const sceneNumber = `Scene ${currentScene?.scene_number}`;
+    const sceneStory = currentScene?.pre_progression;
+    const bgImage = currentScene?.pre_progression_img;
     let [loading, setLoading] = useState(true);
     const [press, setp] = useState(true)
 
     const handleKeyPress = (e) => {
         const val = e.key;
         if (val === "Escape") {
-          navigate("/user")
+            navigate("/user")
         }
         else if (val === "ArrowRight") {
             navigate("/scenepage")
@@ -31,6 +33,10 @@ const PreScene = () => {
         if (!isAuth()) {
             return navigate("/")
 
+        }
+        if (!currentScene) {
+            message.error("No Scene Found!")
+            return navigate("/user")
         }
         setTimeout(() => {
             setLoading(false)

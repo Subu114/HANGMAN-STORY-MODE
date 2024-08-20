@@ -7,12 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import UseCurrentScene from '../../hooks/UseCurrentScene';
 import { isAuth } from '../../auth';
 import LoadingPage from '../../components/LoadingPage';
+import { message } from 'antd';
 
 const ScenePage = () => {
     const currentScene = UseCurrentScene();
-    const sceneNumber = `Scene ${currentScene.scene_number}`;
-    const sceneStory = currentScene.scene_story;
-    const bgImage = currentScene.scene_img;
+    const sceneNumber = `Scene ${currentScene?.scene_number}`;
+    const sceneStory = currentScene?.scene_story;
+    const bgImage = currentScene?.scene_img;
     const navigate = useNavigate();
     let [loading, setLoading] = useState(true);
     const [press, setp] = useState(true)
@@ -36,6 +37,10 @@ const ScenePage = () => {
         if (!isAuth()) {
             return navigate("/")
 
+        }
+        if (!currentScene) {
+            message.error("No Scene Found!")
+            return navigate("/user")
         }
         setTimeout(() => {
             setLoading(false)
